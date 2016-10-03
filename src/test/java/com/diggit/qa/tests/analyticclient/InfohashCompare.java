@@ -16,7 +16,7 @@ import java.awt.event.KeyEvent;
  */
 public class InfohashCompare extends TestBase {
     protected LoginPage loginPage ;
-    String searchText = System.getProperty("search.text", "Cabin Fever 2016");
+    String searchText = System.getProperty("search.text", "Star");
     String diggitCount = "";
     String btnCount = "";
 
@@ -36,23 +36,6 @@ public class InfohashCompare extends TestBase {
         loginPage.enterSearchText(searchText);
         loginPage.search();
         diggitCount = loginPage.getInfohashCount();
-        DRIVER.navigate().to("https://bitsnoop.com/");
-        loginPage.enterBitsnoopSearchText(searchText);
-        Robot robot = null;
-        try {
-            robot = new Robot();
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
-        robot.keyPress(KeyEvent.VK_ENTER);
-        robot.keyRelease(KeyEvent.VK_ENTER);
-        btnCount = loginPage.getBNSearchCount();
-       // Assert.assertEquals(diggitCount, btnCount);
-        String text =   "Searched text            : " + searchText + "\n"
-                      + "Diggit Result Count      : " + diggitCount + "\n"
-                      + "Bitsnoop Result Count    : " + btnCount.replace(")","") + "\n" ;
-//        EmailUtil.send(text);
-
 
     }
 

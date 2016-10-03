@@ -72,6 +72,26 @@ public class LoginTest extends TestBase {
 
             loginPage.clickDelete();
             System.out.println("iterations " + i);
+
+
+
+            //DRIVER.navigate().to("https://bitsnoop.com/");
+            // loginPage.enterBitsnoopSearchText(searchText);
+            // Robot robot = null;
+            // try {
+            //       robot = new Robot();
+            //   } catch (AWTException e) {
+            //      e.printStackTrace();
+            //  }
+            //   robot.keyPress(KeyEvent.VK_ENTER);
+            //   robot.keyRelease(KeyEvent.VK_ENTER);
+            //  btnCount = loginPage.getBNSearchCount();
+            // Assert.assertEquals(diggitCount, btnCount);
+//            String text =   "Searched text            : " + searchText + "\n"
+//                    + "Diggit Result Count      : " + diggitCount + "\n"
+//                    + "Bitsnoop Result Count    : " + btnCount.replace(")","") + "\n" ;
+//        EmailUtil.send(text);
+
         }
     }
 
