@@ -30,7 +30,7 @@ public class LoginTest extends TestBase {
 
 
             LoginHelper.login(
-                    loginPage, "yoosuf@moogilu.com", "hafsa2210", "Super Admins");
+                    loginPage, "yoosuf@moogilu.com", "hafsa2210", "Super Admin");
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {

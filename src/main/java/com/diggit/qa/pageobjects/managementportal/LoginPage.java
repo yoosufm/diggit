@@ -214,7 +214,8 @@ public class LoginPage extends SeleniumBase {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }    }
+        }
+    }
 
 
 
