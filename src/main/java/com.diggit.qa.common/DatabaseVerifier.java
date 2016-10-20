@@ -197,5 +197,22 @@ public class DatabaseVerifier {
 
     }
 
+    public static List<Map<String, String>> getTitles(String titleId){
+        ResultSet resultSet = null;
+        Statement statement = null;
+        List<Map<String, String>> titles = new ArrayList<>();
+        try{
+            statement = DatabaseConnection.getDatabaseConnection().
+                    createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            resultSet = statement.executeQuery("SELECT * FROM diggit_titles WHERE diggit_title_id = '"+titleId+"' LIMIT  5");
+            titles = map(resultSet);
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        close(resultSet);
+
+        return titles;
+    }
+
 
 }

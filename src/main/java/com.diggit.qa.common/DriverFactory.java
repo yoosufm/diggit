@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -32,7 +31,7 @@ public class DriverFactory {
 
 		switch (type) {
 			case HtmlUnit:
-				return new HtmlUnitDriver();
+				return null;
 			case Firefox:
 
 				driver = new FirefoxDriver();
@@ -41,7 +40,7 @@ public class DriverFactory {
 				driver = new InternetExplorerDriver();
 				break;
 			case Chrome:
-				System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+				System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
 
 				driver = new ChromeDriver();
 
