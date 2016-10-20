@@ -23,7 +23,7 @@ public class SeleniumBase {
 	
 
 	public SeleniumBase(){
-		DRIVER = DriverFactory.getWebDriver("Firefox");
+		DRIVER = DriverFactory.getWebDriver("Chrome");
 		DRIVER.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
 		DRIVER.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
 		DRIVER.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
