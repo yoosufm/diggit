@@ -22,14 +22,6 @@ public class HomeHelper {
         }
     }
 
-    public static void verifySearchResult(HomePage homePage, String text){
-        List<WebElement> movieNameList = homePage.getMoviesNameList();
-        for(int index = 0; index < movieNameList.size(); index++){
-            String movieName =  movieNameList.get(index).getText();
-            System.out.println(movieName);
-            Assert.assertTrue("Expected text is not contain. Expected text : " + text + " Displaying movie Name : " + movieName, movieName.contains(text));
-        }
-    }
 
     public static void navigateToTitleManagementPage(HomePage homePage){
         homePage.clickTitleManagement();

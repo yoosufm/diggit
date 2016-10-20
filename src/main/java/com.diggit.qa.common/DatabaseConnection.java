@@ -1,4 +1,4 @@
-package com.diggit.qa.tests.common;
+package com.diggit.qa.common;
 
 import java.sql.*;
 

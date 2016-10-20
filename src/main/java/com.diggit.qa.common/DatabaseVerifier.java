@@ -1,4 +1,7 @@
-package com.diggit.qa.tests.common;
+package com.diggit.qa.common;
+
+import com.diggit.qa.common.DatabaseConnection;
+import com.diggit.qa.common.TextFileWriter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

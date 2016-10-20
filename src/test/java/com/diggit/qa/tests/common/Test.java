@@ -1,6 +1,6 @@
 package com.diggit.qa.tests.common;
 
-import java.sql.*;
+import com.diggit.qa.common.DatabaseVerifier;
 
 
 /**

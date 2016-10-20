@@ -24,15 +24,6 @@ public class TitleManagementHelper {
         }
     }
 
-    public static void verifySearchResult(TitleManagementPage titleManagementPagee, String text){
-        List<WebElement> infoHashNameList = titleManagementPagee.getInfoHashNameList();
-        for(int index = 0; index < infoHashNameList.size(); index++){
-            String movieName =  infoHashNameList.get(index).getText();
-            System.out.println(movieName);
-            Assert.assertTrue("Expected text is not contain. Expected text : " + text + " Displaying movie Name : " + movieName, movieName.contains(text));
-        }
-    }
-
     public static void navigateToTitleManagementPage(HomePage homePage){
         homePage.clickTitleManagement();
     }

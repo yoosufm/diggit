@@ -1,8 +1,7 @@
-package com.diggit.qa.tests.common;
+package com.diggit.qa.common;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+import com.diggit.qa.common.Constant;
 
-import java.awt.*;
 import java.io.*;
 
 /**
