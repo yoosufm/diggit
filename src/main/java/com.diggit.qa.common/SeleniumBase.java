@@ -21,15 +21,20 @@ public class SeleniumBase {
 
 	public static WebDriver DRIVER;
 	
+
 	public SeleniumBase(){
-	
-	}
-	
-	public SeleniumBase(WebDriver driver){
-		DRIVER = driver;
+		DRIVER = DriverFactory.getWebDriver("Firefox");
 		DRIVER.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
 		DRIVER.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
 		DRIVER.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+	}
+
+	public SeleniumBase(String url){
+		DRIVER = DriverFactory.getWebDriver("Firefox");
+		DRIVER.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
+		DRIVER.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+		DRIVER.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		navigateTo(url);
 	}
 
 	public void type(By by, String text){
@@ -158,6 +163,12 @@ public class SeleniumBase {
 		return DRIVER.findElement(by).getText();
 
 	}
+
+    public String getText(WebElement element){
+
+        return element.getText();
+
+    }
 
 	public String getSelectedValue(By by){
 

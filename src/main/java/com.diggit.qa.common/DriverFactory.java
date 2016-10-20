@@ -1,6 +1,7 @@
 package com.diggit.qa.common;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -30,35 +31,28 @@ public class DriverFactory {
 		WebDriver driver ;
 
 		switch (type) {
-		case HtmlUnit:
-			return new HtmlUnitDriver();
-		case Firefox:
-			
-			driver = new FirefoxDriver();
-			break;
-		case InternetExplorer:
-			driver = new InternetExplorerDriver();
-			break;
-		case Chrome:
-			service = new ChromeDriverService.Builder()
-			.usingDriverExecutable(new File("src/main/resources/chromedriver.exe"))
-			.usingAnyFreePort()
-			.build();
-			try {
-				service.start();
-			} catch (IOException e) {
-				stopService();
-				e.printStackTrace();
-			}
-			driver = new RemoteWebDriver(service.getUrl(), DesiredCapabilities.chrome());
-			break;
-		default:
-			driver = new FirefoxDriver();
+			case HtmlUnit:
+				return new HtmlUnitDriver();
+			case Firefox:
+
+				driver = new FirefoxDriver();
+				break;
+			case InternetExplorer:
+				driver = new InternetExplorerDriver();
+				break;
+			case Chrome:
+				System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+
+				driver = new ChromeDriver();
+
+				break;
+			default:
+				driver = new FirefoxDriver();
 		}
 
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-		return driver; 
+		return driver;
 	}
 
 	public static void stopService() {
@@ -66,7 +60,7 @@ public class DriverFactory {
 			service.stop();
 		}
 	}
-	
+
 	public static void setDownloadPath(String path){
 		downloadPath = path;
 	}
