@@ -15,15 +15,15 @@ public class TestTitleWithIMDB {
 
 
     @Test
-    public void testTitleName(){
+    public void testGenres(){
         List<Map<String, String>> titles = DatabaseVerifier.getTitles();
 
         List<String> genresDB = DatabaseVerifier.getGenres(titles.get(0).get("diggit_title_id"));
-        System.out.println(genresDB.get(0));
+
 
         IMDBContent.navigateIMDBContentPage(titles.get(0).get("imdb_id"));
         System.out.println(IMDBContent.getGenres().get(0));
-
+        System.out.println(genresDB.get(0));
     }
 
 }
