@@ -7,6 +7,9 @@
     <groupId>com.moogilu.diggit.qa</groupId>
     <artifactId>diggit-qa</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+        <suite>regression</suite>
+    </properties>
     <dependencies>
 
         <dependency>
@@ -76,11 +79,11 @@
             <artifactId>selenium-firefox-driver</artifactId>
             <version>2.53.1</version>
         </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-htmlunit-driver</artifactId>
-            <version>2.53.1</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.seleniumhq.selenium</groupId>-->
+            <!--<artifactId>selenium-htmlunit-driver</artifactId>-->
+            <!--<version>2.53.1</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-ie-driver</artifactId>
@@ -115,7 +118,7 @@
     </build>
     <profiles>
         <profile>
-            <id>api-test</id>
+            <id>diggit-test</id>
             <build>
                 <plugins>
                     <plugin>
@@ -167,7 +170,7 @@
                         <version>2.19.1</version>
                         <configuration>
                             <testFailureIgnore>true</testFailureIgnore>
-                            <test>InfohashCompare</test>
+                            <test>${suite}</test>
                             <forkMode>never</forkMode>
                             <systemProperties>
                                 <property>
