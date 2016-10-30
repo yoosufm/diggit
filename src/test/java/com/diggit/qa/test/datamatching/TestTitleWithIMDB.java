@@ -17,7 +17,11 @@ public class TestTitleWithIMDB {
 
     @AfterMethod
     public void cleanUpTest(){
-        System.out.println(" *************************** TESTING COMPLETED **************************** " );
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println(" *************************** TESTING **************************** " );
         System.out.println();
         System.out.println();
         System.out.println();
