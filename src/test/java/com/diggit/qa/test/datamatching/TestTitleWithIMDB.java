@@ -3,6 +3,7 @@ package com.diggit.qa.test.datamatching;
 
 import com.diggit.qa.common.DatabaseVerifier;
 import com.diggit.qa.helper.imdb.IMDBContent;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -14,44 +15,38 @@ import java.util.Map;
 public class TestTitleWithIMDB {
 
 
-    @Test
-    public void testGenres(){
-        String imdbId = "";
-        String titleId = "";
-        List<Map<String, String>> titles = DatabaseVerifier.getTitles();
-        titleId = titles.get(0).get("diggit_title_id");
-        imdbId = titles.get(0).get("imdb_id");
-        List<String> genresDB = DatabaseVerifier.getGenres(titleId);
-        IMDBContent.navigateIMDBContentPage(imdbId);
-        List<String> imdbGenres = IMDBContent.getGenres();
-
-        for(String genre: imdbGenres){
-            System.out.println("IMDB Genre : " + genre);
-        }
-
-        if(genresDB.size() > 0) {
-            System.out.println(genresDB.get(0));
-        }else if(genresDB.size() == 0){
-            System.out.println("No genre available in Diggit DB. IMDB Id : " + imdbId + "." +
-                    " Diggit Title ID : " +  titleId );
-        }
+    @AfterMethod
+    public void cleanUpTest(){
+        System.out.println(" *************************** TESTING COMPLETED **************************** " );
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
     }
+
+
 
     @Test
     public void testGenres1(){
         String imdbId = "";
-        String titleId = "823709";
+        String titleId =  "823709";
         List<Map<String, String>> titles = DatabaseVerifier.getTitles(titleId);
         titleId = titles.get(0).get("diggit_title_id");
         imdbId = titles.get(0).get("imdb_id");
         List<String> genresDB = DatabaseVerifier.getGenres(titleId);
         IMDBContent.navigateIMDBContentPage(imdbId);
         List<String> imdbGenres = IMDBContent.getGenres();
+        System.out.println("Title ID : " + titleId  );
+        System.out.println("IMDB ID : " + imdbId );
 
         for(String genre: imdbGenres){
             System.out.println("IMDB Genre : " + genre);
         }
+
+        System.out.println();
         System.out.println("----------------------------------");
+        System.out.println();
+
         if(genresDB.size() > 0) {
             for(String genre: genresDB){
                 System.out.println("Diggit Genre : " + genre);
@@ -60,6 +55,8 @@ public class TestTitleWithIMDB {
             System.out.println("No genre available in Diggit DB. IMDB Id : " + imdbId + "." +
                     " Diggit Title ID : " +  titleId );
         }
+
+
     }
 
     @Test
@@ -72,11 +69,17 @@ public class TestTitleWithIMDB {
         List<String> genresDB = DatabaseVerifier.getGenres(titleId);
         IMDBContent.navigateIMDBContentPage(imdbId);
         List<String> imdbGenres = IMDBContent.getGenres();
+        System.out.println("Title ID : " + titleId  );
+        System.out.println("IMDB ID : " + imdbId );
 
         for(String genre: imdbGenres){
             System.out.println("IMDB Genre : " + genre);
         }
+
+        System.out.println();
         System.out.println("----------------------------------");
+        System.out.println();
+
         if(genresDB.size() > 0) {
             for(String genre: genresDB){
                 System.out.println("Diggit Genre : " + genre);
@@ -87,4 +90,34 @@ public class TestTitleWithIMDB {
         }
     }
 
+
+    @Test
+    public void testGenres3(){
+        String imdbId = "";
+        String titleId = "";
+        List<Map<String, String>> titles = DatabaseVerifier.getTitles();
+        titleId = titles.get(0).get("diggit_title_id");
+        imdbId = titles.get(0).get("imdb_id");
+        List<String> genresDB = DatabaseVerifier.getGenres(titleId);
+        IMDBContent.navigateIMDBContentPage(imdbId);
+        List<String> imdbGenres = IMDBContent.getGenres();
+        System.out.println("Title ID : " + titleId  );
+        System.out.println("IMDB ID : " + imdbId );
+
+
+        for(String genre: imdbGenres){
+            System.out.println("IMDB Genre : " + genre);
+        }
+
+        System.out.println();
+        System.out.println("----------------------------------");
+        System.out.println();
+
+        if(genresDB.size() > 0) {
+            System.out.println(genresDB.get(0));
+        }else if(genresDB.size() == 0){
+            System.out.println("No genre available in Diggit DB. IMDB Id : " + imdbId + "." +
+                    " Diggit Title ID : " +  titleId );
+        }
+    }
 }
