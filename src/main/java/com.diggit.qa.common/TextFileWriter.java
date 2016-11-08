@@ -23,4 +23,32 @@ public class TextFileWriter {
             ex.printStackTrace();
         }
     }
+
+    public static String fileAsString(String path) {
+        //File file = new File("./store/robots.txt");
+        File file = new File(path);
+
+        FileInputStream fis = null;
+        String str = "";
+
+        try {
+            fis = new FileInputStream(file);
+            int content;
+            while ((content = fis.read()) != -1) {
+                // convert to char and display it
+                str += (char) content;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fis != null)
+                    fis.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            return str;
+        }
+    }
+
 }

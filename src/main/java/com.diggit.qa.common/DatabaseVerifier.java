@@ -214,5 +214,68 @@ public class DatabaseVerifier {
         return titles;
     }
 
+    public static int getInfohashTrackCount(String infohash){
+        ResultSet resultSet = null;
+        Statement statement = null;
+        int trackCount = 0;
+
+        try{
+            statement = DatabaseConnection.getDatabaseConnection().
+                    createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            resultSet = statement.executeQuery("SELECT TRACKED FROM torrents.infohashes WHERE infohash = '" +infohash + "'");
+            while (resultSet.next()){
+                trackCount = resultSet.getInt("TRACKED");
+                break;
+            }        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        close(resultSet);
+
+        return trackCount;
+    }
+
+    public static int getGroupInfohashCount(String infohash){
+
+        ResultSet resultSet = null;
+        Statement statement = null;
+        int groupInfohash = 0;
+
+        try{
+            statement = DatabaseConnection.getDatabaseConnection().
+                    createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            resultSet = statement.executeQuery("SELECT count(infohash) AS rowcount FROM torrents.group_infohashes where infohash = '"+infohash+"'");
+            while (resultSet.next()){
+                groupInfohash = resultSet.getInt("rowcount");
+                break;
+            }        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        close(resultSet);
+
+        return groupInfohash;
+    }
+
+    public static int getJobCount(String infohash){
+
+        ResultSet resultSet = null;
+        Statement statement = null;
+        int groupInfohash = 0;
+
+        try{
+            statement = DatabaseConnection.getDatabaseConnection().
+                    createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            resultSet = statement.executeQuery("SELECT count(infohash) AS rowcount FROM jobcentral.jobs where infohash = '"+infohash+"'");
+            while (resultSet.next()){
+                groupInfohash = resultSet.getInt("rowcount");
+                break;
+            }        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        close(resultSet);
+        ///close(statement);
+
+        return groupInfohash;
+    }
+
 
 }
