@@ -11,11 +11,10 @@ public class DatabaseConnection {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             return DriverManager.getConnection(Constant.DB_URL,Constant.DB_USERNAME, Constant.DB_PASSWORD);
-        }catch (SQLException ex){
-            return null;
-        }catch (ClassNotFoundException ex1){
+        }catch (Exception ex){
+            ex.printStackTrace();
             return null;
         }
-    }
 
+    }
 }

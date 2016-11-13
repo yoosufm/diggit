@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.StreamHandler;
 
 /**
  * Created by Azeez on 26/09/2016.
@@ -22,7 +23,7 @@ public class DatabaseVerifier {
         }
 
 
-            return DriverManager.getConnection(url, userName, password);
+        return DriverManager.getConnection(url, userName, password);
 
     }
 
@@ -214,14 +215,12 @@ public class DatabaseVerifier {
         return titles;
     }
 
-    public static int getInfohashTrackCount(String infohash){
+    public static int getInfohashTrackCount(String infohash, Statement statement){
         ResultSet resultSet = null;
-        Statement statement = null;
         int trackCount = 0;
 
         try{
-            statement = DatabaseConnection.getDatabaseConnection().
-                    createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+
             resultSet = statement.executeQuery("SELECT TRACKED FROM torrents.infohashes WHERE infohash = '" +infohash + "'");
             while (resultSet.next()){
                 trackCount = resultSet.getInt("TRACKED");
@@ -229,20 +228,17 @@ public class DatabaseVerifier {
             }        }catch (SQLException ex){
             ex.printStackTrace();
         }
-        close(resultSet);
 
         return trackCount;
     }
 
-    public static int getGroupInfohashCount(String infohash){
-
+    public static int getGroupInfohashCount(String infohash, Statement statement){
         ResultSet resultSet = null;
-        Statement statement = null;
+
         int groupInfohash = 0;
 
         try{
-            statement = DatabaseConnection.getDatabaseConnection().
-                    createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+
             resultSet = statement.executeQuery("SELECT count(infohash) AS rowcount FROM torrents.group_infohashes where infohash = '"+infohash+"'");
             while (resultSet.next()){
                 groupInfohash = resultSet.getInt("rowcount");
@@ -250,31 +246,51 @@ public class DatabaseVerifier {
             }        }catch (SQLException ex){
             ex.printStackTrace();
         }
-        close(resultSet);
 
         return groupInfohash;
     }
 
-    public static int getJobCount(String infohash){
-
+    public static int getJobCount(String infohash, Statement statement){
         ResultSet resultSet = null;
-        Statement statement = null;
-        int groupInfohash = 0;
-
+        int jobCount = 0;
         try{
-            statement = DatabaseConnection.getDatabaseConnection().
-                    createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             resultSet = statement.executeQuery("SELECT count(infohash) AS rowcount FROM jobcentral.jobs where infohash = '"+infohash+"'");
             while (resultSet.next()){
-                groupInfohash = resultSet.getInt("rowcount");
+                jobCount = resultSet.getInt("rowcount");
                 break;
             }        }catch (SQLException ex){
             ex.printStackTrace();
         }
-        close(resultSet);
-        ///close(statement);
+        return jobCount;
+    }
 
-        return groupInfohash;
+    public static List<Integer>  getStateMachineCount(String infohash){
+
+        Statement statement = null;
+        List<Integer> stateMachineCount = new ArrayList<>();
+        int groupInfohash = 0;
+        int jobCount = 0;
+        int trackCount = 0;
+        try {
+            statement = DatabaseConnection.getDatabaseConnection().
+                    createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            groupInfohash = getGroupInfohashCount(infohash, statement);
+            jobCount = getJobCount(infohash, statement);
+            trackCount = getInfohashTrackCount(infohash, statement);
+        }catch (Exception e){
+
+        }
+        try {
+            stateMachineCount.add(trackCount);
+            stateMachineCount.add(groupInfohash);
+
+            stateMachineCount.add(jobCount);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        close(statement);
+        return stateMachineCount;
     }
 
 
