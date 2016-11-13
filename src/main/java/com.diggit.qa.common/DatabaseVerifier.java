@@ -293,5 +293,23 @@ public class DatabaseVerifier {
         return stateMachineCount;
     }
 
+    public static List<String> getInfohashs(String endIndex){
+        ResultSet resultSet = null;
+        int jobCount = 0;
+        List<String> infohashes = new ArrayList<>();
+        Statement statement = null;
+        try{
+            statement = DatabaseConnection.getDatabaseConnection().
+                    createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            resultSet = statement.executeQuery("SELECT infohash FROM jobcentral.jobs LIMIT 100 OFFSET " + endIndex);
+            infohashes = list(resultSet);
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        close(statement);
+
+        return infohashes;
+    }
+
 
 }

@@ -15,6 +15,7 @@ public class TextFileWriter {
             if(!file.exists()){
                 file.createNewFile();
             }
+
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file,true));
             bufferedWriter.write(line);
             bufferedWriter.newLine();
@@ -48,6 +49,31 @@ public class TextFileWriter {
                 ex.printStackTrace();
             }
             return str;
+        }
+    }
+
+    public static void writeLineToFileWithOutOverWrite(String line, String filePath){
+        try{
+            FileOutputStream writer = new FileOutputStream(filePath);
+
+            File file = new File(filePath);
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file,true));
+            bufferedWriter.write(line);
+            bufferedWriter.newLine();
+            bufferedWriter.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public static void cleanFileContents(String filePath){
+        try{
+            FileOutputStream writer = new FileOutputStream(filePath);
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 
