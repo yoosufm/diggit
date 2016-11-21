@@ -16,8 +16,8 @@ public class EmailUtil {
     }
 
     public static void send(String body, String subject){
-        final String username = "mak83826@gmail.com";
-        final String password = "229/2Mhm";
+        final String username = "yoosuf@moogilu.com";
+        final String password = "mahdi2210";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");

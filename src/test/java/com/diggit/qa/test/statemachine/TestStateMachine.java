@@ -9,6 +9,10 @@ import com.diggit.qa.helper.imdb.IMDBContent;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +24,8 @@ public class TestStateMachine {
 
     @Test
     public void testInfohashTrackCount(){
+        DateFormat df = new SimpleDateFormat("dd_MMM_yyyy");
+        String dateStr = df.format(new Date()).toString();
 
         int count = Integer.valueOf(TextFileWriter.fileAsString("src/main/resources/infohash_index.txt").trim());
         int fail_count = 0;
@@ -42,7 +48,7 @@ public class TestStateMachine {
                 stateMachineStatus = "Incorrect";
                 fail_count ++;
             }
-            TextFileWriter.writeLineToFileWithOutOverWrite(infohash + "," + state.get(0) + "," + state.get(1) + "," + expectedJobCount + "," + actualJobCount+ "," + stateMachineStatus);
+            TextFileWriter.writeLineToFileWithOutOverWrite(infohash + "," + state.get(0) + "," + state.get(1) + "," + expectedJobCount + "," + actualJobCount+ "," + stateMachineStatus, "src/main/resources/State_Machine_" +dateStr + ".csv");
             try {
                 //Thread.sleep(10);
             }catch (Exception e){
@@ -54,12 +60,13 @@ public class TestStateMachine {
         TextFileWriter.writeLineToFileWithOutOverWrite(String.valueOf(count), "src/main/resources/infohash_index.txt");
         success_count = success_count - fail_count;
         String email = EmailUtil.getStateMachineEmail(success_count, fail_count);
-        EmailUtil.send(email, "State Machine Verification");
+        EmailUtil.send(email, "State Machine Verification " + dateStr);
 
 
     }
 
     public static void main(String [] args){
+
     }
 
 
