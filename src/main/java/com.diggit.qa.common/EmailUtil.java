@@ -4,6 +4,7 @@ package com.diggit.qa.common;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.xml.soap.Text;
 import java.util.Properties;
 
 /**
@@ -11,10 +12,10 @@ import java.util.Properties;
  */
 public class EmailUtil {
     public static void main(String [] args) {
-        send("dddd");
+        send("dddd", "test");
     }
 
-    public static void send(String body){
+    public static void send(String body, String subject){
         final String username = "mak83826@gmail.com";
         final String password = "229/2Mhm";
 
@@ -36,8 +37,8 @@ public class EmailUtil {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("mak83826@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("yoosuf@moogilu.com,jagadish@moogilu.com, "));
-            message.setSubject("Diggit Vs Bitsnoop");
+                    InternetAddress.parse("yoosuf@moogilu.com"));
+            message.setSubject(subject);
             message.setText(body);
 
             Transport.send(message);
@@ -48,5 +49,21 @@ public class EmailUtil {
             throw new RuntimeException(e);
         }
     }
+
+    public static String getStateMachineEmail(int successCount, int failCount){
+
+        String email = TextFileWriter.fileAsString("src/main/resources/stateMachineEmail.txt");
+        String summary = "";
+        if(successCount == 100){
+            summary =  Constant.ALL_SUCCESS;
+        } else {
+            summary = Constant.SOME_FAILED;
+            summary = summary.replace("s_count", String.valueOf(successCount)).replace("f_count", String.valueOf(failCount));
+        }
+
+        email = email.replace("summery_statement", summary);
+
+        return email;
     }
+}
 

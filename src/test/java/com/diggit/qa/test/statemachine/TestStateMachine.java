@@ -3,6 +3,7 @@ package com.diggit.qa.test.statemachine;
 
 import com.diggit.qa.common.Constant;
 import com.diggit.qa.common.DatabaseVerifier;
+import com.diggit.qa.common.EmailUtil;
 import com.diggit.qa.common.TextFileWriter;
 import com.diggit.qa.helper.imdb.IMDBContent;
 import org.testng.annotations.AfterMethod;
@@ -21,6 +22,9 @@ public class TestStateMachine {
     public void testInfohashTrackCount(){
 
         int count = Integer.valueOf(TextFileWriter.fileAsString("src/main/resources/infohash_index.txt").trim());
+        int fail_count = 0;
+        int success_count = 100;
+
         List<String> infohashes = DatabaseVerifier.getInfohashs(String.valueOf(count));
         TextFileWriter.cleanFileContents(Constant.errorLogFileName);
         TextFileWriter.writeLineToFileWithOutOverWrite("Infohash,Track_Count,Group_Infohash_Count,Expected_Job_Count,Actual_Job_Count,State_Machine_Status");
@@ -36,6 +40,7 @@ public class TestStateMachine {
             int actualJobCount = state.get(2);
             if(expectedJobCount != actualJobCount){
                 stateMachineStatus = "Incorrect";
+                fail_count ++;
             }
             TextFileWriter.writeLineToFileWithOutOverWrite(infohash + "," + state.get(0) + "," + state.get(1) + "," + expectedJobCount + "," + actualJobCount+ "," + stateMachineStatus);
             try {
@@ -47,8 +52,14 @@ public class TestStateMachine {
 
         count += 100;
         TextFileWriter.writeLineToFileWithOutOverWrite(String.valueOf(count), "src/main/resources/infohash_index.txt");
+        success_count = success_count - fail_count;
+        String email = EmailUtil.getStateMachineEmail(success_count, fail_count);
+        EmailUtil.send(email, "State Machine Verification");
 
 
+    }
+
+    public static void main(String [] args){
     }
 
 
