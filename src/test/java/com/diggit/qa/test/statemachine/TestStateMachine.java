@@ -26,7 +26,8 @@ public class TestStateMachine {
     public void testInfohashTrackCount(){
         DateFormat df = new SimpleDateFormat("dd_MMM_yyyy");
         String dateStr = df.format(new Date()).toString();
-
+        File tempFile = new File("src/main/resources/State_Machine_" +dateStr + ".csv");
+        tempFile.deleteOnExit();
         int count = Integer.valueOf(TextFileWriter.fileAsString("src/main/resources/infohash_index.txt").trim());
         int fail_count = 0;
         int success_count = 100;
@@ -63,7 +64,6 @@ public class TestStateMachine {
         if(Constant.IS_SEND_MAIL) {
             EmailUtil.send(email, "State Machine Verification " + dateStr);
         }
-        File tempFile = new File("src/main/resources/State_Machine_" +dateStr + ".csv");
 
         try {
             StorageSample.uploadFile("State Machine Verification " + dateStr, "text/csv", tempFile, "qa_results");
