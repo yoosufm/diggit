@@ -62,7 +62,6 @@ public class TestStateMachine {
 
         try {
             File tempFile = new File("src/main/resources/State_Machine_Verification_" +dateStr + ".csv");
-
             StorageSample.uploadFile("State_Machine_Verification_" + dateStr, "text/csv", tempFile, "qa_results");
         } catch (IOException e) {
             e.printStackTrace();
