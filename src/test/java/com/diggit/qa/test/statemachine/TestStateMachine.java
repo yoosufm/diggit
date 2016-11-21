@@ -66,7 +66,7 @@ public class TestStateMachine {
         }
 
         try {
-            StorageSample.uploadFile("State Machine Verification " + dateStr, "text/csv", tempFile, "qa_results");
+            StorageSample.uploadFile("State_Machine_Verification " + dateStr, "text/csv", tempFile, "qa_results");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (GeneralSecurityException e) {
