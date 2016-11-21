@@ -26,15 +26,14 @@ public class TestStateMachine {
     public void testInfohashTrackCount(){
         DateFormat df = new SimpleDateFormat("dd_MMM_yyyy");
         String dateStr = df.format(new Date()).toString();
-        File tempFile = new File("src/main/resources/State_Machine_" +dateStr + ".csv");
-        tempFile.deleteOnExit();
+       // tempFile.deleteOnExit();
         int count = Integer.valueOf(TextFileWriter.fileAsString("src/main/resources/infohash_index.txt").trim());
         int fail_count = 0;
         int success_count = 100;
 
         List<String> infohashes = DatabaseVerifier.getInfohashs(String.valueOf(count));
         TextFileWriter.cleanFileContents(Constant.errorLogFileName);
-        TextFileWriter.writeLineToFileWithOutOverWrite("Infohash,Track_Count,Group_Infohash_Count,Expected_Job_Count,Actual_Job_Count,State_Machine_Status");
+        TextFileWriter.writeLineToFile("Infohash,Track_Count,Group_Infohash_Count,Expected_Job_Count,Actual_Job_Count,State_Machine_Status", "src/main/resources/State_Machine_Verification_" +dateStr + ".csv");
         for(String infohash: infohashes) {
             infohash =infohash.replace("\r","");
             String stateMachineStatus = "Correct";
@@ -49,12 +48,8 @@ public class TestStateMachine {
                 stateMachineStatus = "Incorrect";
                 fail_count ++;
             }
-            TextFileWriter.writeLineToFileWithOutOverWrite(infohash + "," + state.get(0) + "," + state.get(1) + "," + expectedJobCount + "," + actualJobCount+ "," + stateMachineStatus, "src/main/resources/State_Machine_" +dateStr + ".csv");
-            try {
-                //Thread.sleep(10);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            TextFileWriter.writeLineToFile(infohash + "," + state.get(0) + "," + state.get(1) + "," + expectedJobCount + "," + actualJobCount+ "," + stateMachineStatus, "src/main/resources/State_Machine_Verification_" +dateStr + ".csv");
+
         }
 
         count += 100;
@@ -66,6 +61,8 @@ public class TestStateMachine {
         }
 
         try {
+            File tempFile = new File("src/main/resources/State_Machine_Verification_" +dateStr + ".csv");
+
             StorageSample.uploadFile("State_Machine_Verification_" + dateStr, "text/csv", tempFile, "qa_results");
         } catch (IOException e) {
             e.printStackTrace();

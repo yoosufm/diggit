@@ -69,6 +69,22 @@ public class TextFileWriter {
         }
     }
 
+    public static void writeLineToFile(String line, String filePath){
+        try{
+            File file = new File(filePath);
+            if(!file.exists()){
+                file.createNewFile();
+            }
+
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file,true));
+            bufferedWriter.write(line);
+            bufferedWriter.newLine();
+            bufferedWriter.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
     public static void cleanFileContents(String filePath){
         try{
             FileOutputStream writer = new FileOutputStream(filePath);
