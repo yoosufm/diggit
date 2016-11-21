@@ -1,14 +1,14 @@
 package com.diggit.qa.test.statemachine;
 
 
-import com.diggit.qa.common.Constant;
-import com.diggit.qa.common.DatabaseVerifier;
-import com.diggit.qa.common.EmailUtil;
-import com.diggit.qa.common.TextFileWriter;
+import com.diggit.qa.common.*;
 import com.diggit.qa.helper.imdb.IMDBContent;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -60,13 +60,23 @@ public class TestStateMachine {
         TextFileWriter.writeLineToFileWithOutOverWrite(String.valueOf(count), "src/main/resources/infohash_index.txt");
         success_count = success_count - fail_count;
         String email = EmailUtil.getStateMachineEmail(success_count, fail_count);
-        EmailUtil.send(email, "State Machine Verification " + dateStr);
+        if(Constant.IS_SEND_MAIL) {
+            EmailUtil.send(email, "State Machine Verification " + dateStr);
+        }
+        File tempFile = new File("src/main/resources/State_Machine_" +dateStr + ".csv");
+
+        try {
+            StorageSample.uploadFile("State Machine Verification " + dateStr, "text/csv", tempFile, "qa_results");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        }
 
 
     }
 
     public static void main(String [] args){
-
     }
 
 
