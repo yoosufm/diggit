@@ -301,7 +301,7 @@ public class DatabaseVerifier {
         try{
             statement = DatabaseConnection.getDatabaseConnection().
                     createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            resultSet = statement.executeQuery("SELECT infohash FROM torrents.infohashes ORDER BY rand() LIMIT 10;");
+            resultSet = statement.executeQuery("SELECT infohash FROM torrents.infohashes ORDER BY rand() LIMIT 100;");
             infohashes = list(resultSet);
         }catch (SQLException ex){
             ex.printStackTrace();

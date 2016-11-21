@@ -35,9 +35,9 @@ public class EmailUtil {
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("mak83826@gmail.com"));
+            message.setFrom(new InternetAddress("yoosuf@moogilu.com"));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("yoosuf@moogilu.com"));
+                    InternetAddress.parse("diggit@moogilu.com"));
             message.setSubject(subject);
             message.setText(body);
 
