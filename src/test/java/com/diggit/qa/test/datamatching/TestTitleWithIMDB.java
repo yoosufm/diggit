@@ -44,16 +44,20 @@ public class TestTitleWithIMDB {
         System.out.println("IMDB ID : " + imdbId );
 
         for(String genre: imdbGenres){
-            imdbGenre += genre + " | ";
+            if(imdbGenre.isEmpty()){
+                imdbGenre = genre;
+            } else {
+                imdbGenre += " | " + genre;
+            }
         }
-
-        System.out.println();
-        System.out.println("----------------------------------");
-        System.out.println();
 
         if(genresDB.size() > 0) {
             for(String genre: genresDB){
-                diggitGenre += genre + " | ";
+                if(diggitGenre.isEmpty()){
+                    diggitGenre = genre;
+                } else {
+                    diggitGenre += " | " + genre;
+                }
             }
         }else if(genresDB.size() == 0){
             diggitGenre = "No genre available in Diggit DB.";
