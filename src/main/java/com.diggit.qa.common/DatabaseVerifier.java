@@ -328,4 +328,24 @@ public class DatabaseVerifier {
 
         return titles;
     }
+
+    public static String getLeftJoinCount(){
+        ResultSet resultSet = null;
+        Statement statement = null;
+        String leftJoinCount = "";
+        try{
+            statement = DatabaseConnection.getDatabaseConnection().
+                    createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            resultSet = statement.executeQuery("SELECT COUNT(dti.diggit_title_id) AS rowcount FROM diggit_titles_infohashes dti LEFT JOIN diggit_titles dt ON dt.diggit_title_id = dti.diggit_title_id WHERE dt.diggit_title_id IS NULL;");
+            while (resultSet.next()){
+                leftJoinCount = resultSet.getString("rowcount");
+                break;
+            }
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        close(resultSet);
+
+        return leftJoinCount;
+    }
 }

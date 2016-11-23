@@ -3,7 +3,9 @@ package com.diggit.qa.test.statemachine;
 
 import com.diggit.qa.common.*;
 import com.diggit.qa.helper.imdb.IMDBContent;
+import org.junit.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -20,12 +22,16 @@ import java.util.Map;
  * Created by yoosufm on 10/20/16.
  */
 public class TestStateMachine {
-
+    String dateStr = "";
+    @BeforeClass
+    public void init(){
+        DateFormat df = new SimpleDateFormat("dd_MMM_yyyy");
+        dateStr = df.format(new Date()).toString();
+    }
 
     @Test
     public void testInfohashTrackCount(){
-        DateFormat df = new SimpleDateFormat("dd_MMM_yyyy");
-        String dateStr = df.format(new Date()).toString();
+
        // tempFile.deleteOnExit();
         int count = Integer.valueOf(TextFileWriter.fileAsString("src/main/resources/infohash_index.txt").trim());
         int fail_count = 0;
@@ -77,5 +83,10 @@ public class TestStateMachine {
     public static void main(String [] args){
     }
 
+    @Test
+    public void testLeftJoin(){
+        String title = "Total inconsistent rows of Diggit title";
+        Assert.assertEquals(DatabaseVerifier.getLeftJoinCount(), "0");
+    }
 
 }
