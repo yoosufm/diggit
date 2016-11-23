@@ -62,6 +62,7 @@ public class TestTitleWithIMDB {
         }else if(genresDB.size() == 0){
             diggitGenre = "No genre available in Diggit DB.";
         }
+
         TextFileWriter.writeLineToFile(titleId + "," + imdbId + "," + imdbGenre + "," +  diggitGenre, "src/main/resources/Genre_Verification_" +dateStr + ".csv");
 
         IMDBContent.quiteDriver();
