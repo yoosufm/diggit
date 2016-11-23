@@ -78,6 +78,10 @@ public class SeleniumBase {
 		
 	}
 
+	public void driverQuite(){
+		DRIVER.quit();
+	}
+
 	public void selectByIndex(By by, int index){
 
 		new Select(DRIVER.findElement(by)).selectByIndex(index);

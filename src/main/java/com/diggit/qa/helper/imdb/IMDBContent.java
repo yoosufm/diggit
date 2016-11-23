@@ -17,4 +17,8 @@ public class IMDBContent {
     public static List<String> getGenres(){
         return imdbContentPage.getGenres();
     }
+
+    public static void quiteDriver(){
+        imdbContentPage.quite();
+    }
 }

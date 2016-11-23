@@ -15,28 +15,32 @@ public class IMDBContentPage extends SeleniumBase {
 
     private By imdbGenres = By.xpath("//div[@class='title_wrapper']/div[@class='subtext']/a/span[@class='itemprop']");
 
-    public IMDBContentPage(String imdbID){
+    public IMDBContentPage(String imdbID) {
         super(Constant.IMDB_URL + imdbID);
     }
 
-    public IMDBContentPage(){
+    public IMDBContentPage() {
     }
 
 
-    public void navigateToIMDBContentPage(String imdbID){
+    public void navigateToIMDBContentPage(String imdbID) {
         try {
             navigateTo(Constant.IMDB_URL + imdbID);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public List<String> getGenres(){
+    public List<String> getGenres() {
         List<String> strGenres = new ArrayList<>();
         List<WebElement> weGenres = getElements(imdbGenres);
-        for(WebElement element: weGenres){
+        for (WebElement element : weGenres) {
             strGenres.add(getText(element));
         }
         return strGenres;
+    }
+
+    public void quite(){
+        driverQuite();
     }
 }

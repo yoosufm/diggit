@@ -312,4 +312,20 @@ public class DatabaseVerifier {
     }
 
 
+    public static List<Map<String, String>> getTitle(){
+        ResultSet resultSet = null;
+        Statement statement = null;
+        List<Map<String, String>> titles = new ArrayList<>();
+        try{
+            statement = DatabaseConnection.getDatabaseConnection().
+                    createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            resultSet = statement.executeQuery("SELECT * FROM diggit_titles ORDER BY rand() LIMIT 1;");
+            titles = map(resultSet);
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        close(resultSet);
+
+        return titles;
+    }
 }
