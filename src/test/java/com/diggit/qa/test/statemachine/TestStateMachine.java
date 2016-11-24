@@ -85,7 +85,7 @@ public class TestStateMachine {
 
     @Test
     public void testLeftJoin(){
-        String title = "Total inconsistent rows of Diggit title";
+        String title = "Total inconsistent rows of Diggit tit,,,,,,,le";
         Assert.assertEquals(DatabaseVerifier.getLeftJoinCount(), "0");
     }
 
