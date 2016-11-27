@@ -25,7 +25,7 @@ public class TestStateMachine {
     String dateStr = "";
     @BeforeClass
     public void init(){
-        DateFormat df = new SimpleDateFormat("dd_MMM_yyyy");
+        DateFormat df = new SimpleDateFormat("dd_MMM_yyyy_hh");
         dateStr = df.format(new Date()).toString();
     }
 
