@@ -37,7 +37,7 @@ public class TestStateMachine {
         int fail_count = 0;
         int success_count = 100;
 
-        List<String> infohashes = DatabaseVerifier.getInfohashs(String.valueOf(count));
+        List<String> infohashes = DatabaseVerifier.getInfohashs();
         TextFileWriter.cleanFileContents(Constant.errorLogFileName);
         TextFileWriter.writeLineToFile("State machine verification test", "src/main/resources/State_Machine_Verification_" +dateStr + ".csv");
 
