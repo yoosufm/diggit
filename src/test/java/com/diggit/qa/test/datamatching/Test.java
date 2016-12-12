@@ -8,6 +8,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -18,22 +20,9 @@ public class Test {
 
     public static void main(String[] args){
         try {
-            String imdbID = "";
-            HttpClient client = new DefaultHttpClient();
-
-            HttpPost post = new HttpPost(System.getProperty("ctaf.api.ur", "http://www.omdbapi.com/?i=tt4172430&r=json"));
-
-//            StringEntity input = new StringEntity();
-//            input.setContentType("application/json");
-//            post.setEntity(input);
-
-            HttpResponse response = null;
-            response = client.execute(post);
-//            System.out.println("Complted " + featureName + "results update to Dashboard : " + new Date().toString());
-            String myString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
-            System.out.println(myString);
-
-            System.out.println(response.getStatusLine());
+            DateFormat df = new SimpleDateFormat("dd_MMM_yyyy_hh");
+            String dateStr = df.format(new Date()).toString();
+            System.out.println(dateStr);
         } catch (Exception e) {
             e.printStackTrace();
         }

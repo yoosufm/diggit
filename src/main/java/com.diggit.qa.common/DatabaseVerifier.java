@@ -293,7 +293,7 @@ public class DatabaseVerifier {
         return stateMachineCount;
     }
 
-    public static List<String> getInfohashs(String endIndex){
+    public static List<String> getInfohashs(){
         ResultSet resultSet = null;
         int jobCount = 0;
         List<String> infohashes = new ArrayList<>();
@@ -301,7 +301,7 @@ public class DatabaseVerifier {
         try{
             statement = DatabaseConnection.getDatabaseConnection().
                     createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            resultSet = statement.executeQuery("SELECT infohash FROM torrents.infohashes ORDER BY rand() LIMIT 1000;");
+            resultSet = statement.executeQuery("SELECT infohash FROM torrents.infohashes ORDER BY rand() LIMIT 3000;");
             infohashes = list(resultSet);
         }catch (SQLException ex){
             ex.printStackTrace();
