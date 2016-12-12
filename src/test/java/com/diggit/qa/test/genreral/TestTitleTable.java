@@ -29,7 +29,7 @@ public class TestTitleTable {
     @Test
     public void testTotalInconsistentRowsOfDigitTitle(){
         String title = "Total inconsistent rows of Diggit title";
-        String toList = "yoosuf@moogilu.com,mak83826@gmail.com";
+        String toList = "yoosuf@moogilu.com,jagadish@moogilu.com,shafeek@moogilu.com,yogesh@moogilu.com,";
         if(!DatabaseVerifier.getLeftJoinCount().equalsIgnoreCase("0")){
             String emailBody  = "There are inconsistent rows available in Diggit title table.";
             EmailUtil.send(emailBody, title,toList);
