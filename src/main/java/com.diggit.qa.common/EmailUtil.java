@@ -37,7 +37,7 @@ public class EmailUtil {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("yoosuf@moogilu.com"));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("diggit@moogilu.com"));
+                    InternetAddress.parse("jagadish@moogilu.com"));
             message.setSubject(subject);
             message.setText(body);
 
@@ -64,6 +64,41 @@ public class EmailUtil {
         email = email.replace("summery_statement", summary);
 
         return email;
+    }
+
+    public static void send(String body, String subject, String toList){
+        final String username = "yoosuf@moogilu.com";
+        final String password = "mahdi2210";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("yoosuf@moogilu.com"));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(toList));
+            message.setSubject(subject);
+            message.setText(body);
+
+            Transport.send(message);
+
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
