@@ -2,7 +2,7 @@ package com.diggit.qa.test.genreral;
 
 
 import com.diggit.qa.common.*;
-import org.junit.Assert;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -29,10 +29,25 @@ public class TestTitleTable {
     @Test
     public void testTotalInconsistentRowsOfDigitTitle(){
         String title = "Total inconsistent rows of Diggit title";
-        String toList = "yoosuf@moogilu.com,jagadish@moogilu.com,shafeek@moogilu.com,yogesh@moogilu.com,";
-        if(!DatabaseVerifier.getLeftJoinCount().equalsIgnoreCase("0")){
+       String toList = "yoosuf@moogilu.com,jagadish@moogilu.com,shafeek@moogilu.com,yogesh@moogilu.com,rajnish@moogilu.com";
+        //String toList = "yoosuf@moogilu.com";
+        int actualRowCount = 1;
+        actualRowCount = DatabaseVerifier.getLeftJoinCount();
+
+
+        if(actualRowCount == Errors.DB_SERVER_NOT_AVAILABLE){
+            String emailBody  = "Diggit Production Data Base Sever Is Not Accessible";
+            EmailUtil.send(emailBody, emailBody,toList);
+            Assert.fail(emailBody);
+        } else if(actualRowCount == Errors.DB_NOT_AVAILABLE){
+            String emailBody  = "Diggit Production Torrent Data Base Is Not Accessible";
+            EmailUtil.send(emailBody, emailBody,toList);
+            Assert.fail(emailBody);
+        }
+        else if(actualRowCount != 0){
             String emailBody  = "There are inconsistent rows available in Diggit title table.";
             EmailUtil.send(emailBody, title,toList);
+            Assert.fail(emailBody);
         }
     }
 

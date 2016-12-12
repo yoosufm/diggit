@@ -7,14 +7,13 @@ import java.sql.*;
  */
 public class DatabaseConnection {
 
-    public static Connection getDatabaseConnection(){
-        try{
+    public static Connection getDatabaseConnection() throws SQLException {
+        try {
             Class.forName("com.mysql.jdbc.Driver");
-            return DriverManager.getConnection(Constant.DB_URL,Constant.DB_USERNAME, Constant.DB_PASSWORD);
-        }catch (Exception ex){
-            ex.printStackTrace();
-            return null;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-
+        Connection connection = DriverManager.getConnection(Constant.DB_URL,Constant.DB_USERNAME, Constant.DB_PASSWORD);
+        return connection;
     }
 }
