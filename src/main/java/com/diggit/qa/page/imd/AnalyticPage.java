@@ -38,7 +38,7 @@ public class AnalyticPage {
     }
 
     public void search(String text){
-        driver.findElement(By.xpath("//input[@ng-enter='search()1']")).sendKeys(text);
+        driver.findElement(By.xpath("//input[@ng-enter='search()']")).sendKeys(text);
         driver.findElement(By.xpath("//button[@class='btn btn-success']")).click();
     }
 }
