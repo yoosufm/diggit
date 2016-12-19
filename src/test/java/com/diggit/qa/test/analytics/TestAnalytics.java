@@ -33,7 +33,6 @@ public class TestAnalytics extends TestBase {
             String emailBody  = "Production Analytic Is Not Accessible";
             EmailUtil.send(emailBody, emailBody,toList);
             Assert.fail(emailBody);
-
         }
     }
 
