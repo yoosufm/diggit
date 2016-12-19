@@ -112,6 +112,7 @@ public class StorageSample {
 
     // Do the insert
     Storage client = StorageFactory.getService();
+
     Storage.Objects.Insert insertRequest = client.objects().insert(
         bucketName, objectMetadata, contentStream);
 
@@ -185,5 +186,15 @@ public class StorageSample {
       System.exit(1);
     }
   }
+
+  public static void uploadFileF(
+          String name, String contentType, File file, String bucketName)
+          throws IOException, GeneralSecurityException {
+
+
+   
+  }
+
+
 }
 //[END all]

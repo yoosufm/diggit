@@ -40,9 +40,7 @@ public class TestBase extends TestListenerAdapter {
 
 	@BeforeClass
 	public void initSelenium() {
-		BASE_URL = "http://management.diggit.com/login";
 		DRIVER = DriverFactory.getWebDriver("Chrome");
-		DRIVER.navigate().to(BASE_URL);
 
 	}
 

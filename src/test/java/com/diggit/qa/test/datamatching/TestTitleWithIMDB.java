@@ -69,7 +69,23 @@ public class TestTitleWithIMDB {
 
         try {
             File tempFile = new File("src/main/resources/Genre_Verification_" +dateStr + ".csv");
-            StorageSample.uploadFile("Genre_Verification_" + dateStr, "text/csv", tempFile, "qa_results");
+
+            StorageSample.uploadFileF("Genre_Verification_" + dateStr, "text/csv", tempFile, "qa_results");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void createFolder(){
+        DateFormat df = new SimpleDateFormat("dd_MMM_yyyy");
+        String dateStr = df.format(new Date()).toString();
+        try {
+            File tempFile = new File("src/main/resources/infohash_index.txt");
+
+            StorageSample.uploadFileF("Genre_Verification_" + dateStr, "Folder", tempFile, "qa_results");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (GeneralSecurityException e) {

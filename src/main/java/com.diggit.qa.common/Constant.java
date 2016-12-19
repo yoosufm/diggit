@@ -20,5 +20,6 @@ public class Constant {
     public static String SOME_FAILED = "1. State machine is correct for s_count info-hashes.  \n2. State machine is incorrect for f_count info-hashes.";
 
     public static boolean IS_SEND_MAIL = Boolean.valueOf(System.getProperty("is.send.mail","false"));
+    public static String ANALYTIC_URL = "http://management.diggit.com/login";
 
 }
