@@ -51,4 +51,25 @@ public class TestTitleTable {
         }
     }
 
+    @Test
+    public void testJobTable(){
+        String title = "Total inconsistent rows of Diggit title";
+        String toList = "yoosuf@moogilu.com,jagadish@moogilu.com,shafeek@moogilu.com,yogesh@moogilu.com,rajnish@moogilu.com";
+        //String toList = "yoosuf@moogilu.com";
+        int actualRowCount = 1;
+        actualRowCount = DatabaseVerifier.getJobCount();
+
+
+        if(actualRowCount == Errors.DB_SERVER_NOT_AVAILABLE){
+            String emailBody  = "Diggit Production Data Base Sever Is Not Accessible";
+            EmailUtil.send(emailBody, emailBody,toList);
+            Assert.fail(emailBody);
+        } else if(actualRowCount == Errors.DB_NOT_AVAILABLE){
+            String emailBody  = "Diggit Production Job Central Schema Is Not Accessible";
+            EmailUtil.send(emailBody, emailBody,toList);
+            Assert.fail(emailBody);
+        }
+
+    }
+
 }

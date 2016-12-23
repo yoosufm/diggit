@@ -354,4 +354,24 @@ public class DatabaseVerifier {
 
         return leftJoinCount;
     }
+
+    public static int getJobCount(){
+        ResultSet resultSet = null;
+        Statement statement = null;
+        int leftJoinCount = 100;
+        Connection connection = null;
+        try {
+            connection = DatabaseConnection.getDatabaseConnection();
+            statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            resultSet = statement.executeQuery("SELECT * FROM jobcentral.jobs ORDER BY rand() LIMIT 100;");
+        }catch (CommunicationsException ex){
+            ex.printStackTrace();
+            return Errors.DB_SERVER_NOT_AVAILABLE;
+        }catch (SQLException sq){
+            return Errors.DB_NOT_AVAILABLE;
+        }
+        close(resultSet);
+
+        return leftJoinCount;
+    }
 }
