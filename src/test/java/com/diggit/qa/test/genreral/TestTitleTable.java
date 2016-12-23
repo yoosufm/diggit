@@ -75,8 +75,8 @@ public class TestTitleTable {
     @Test
     public void testErrorReportTable(){
         String title = "Total inconsistent rows of Diggit title";
-        //String toList = "yoosuf@moogilu.com,jagadish@moogilu.com,shafeek@moogilu.com,yogesh@moogilu.com,rajnish@moogilu.com";
-        String toList = "yoosuf@moogilu.com";
+        String toList = "yoosuf@moogilu.com,jagadish@moogilu.com,shafeek@moogilu.com,yogesh@moogilu.com,rajnish@moogilu.com";
+        //String toList = "yoosuf@moogilu.com";
         int actualRowCount = 1;
         actualRowCount = DatabaseVerifier.getErrorCount();
 
