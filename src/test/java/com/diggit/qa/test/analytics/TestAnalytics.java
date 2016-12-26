@@ -14,8 +14,8 @@ import org.testng.annotations.Test;
  */
 public class TestAnalytics extends TestBase {
     protected AnalyticPage analyticPage;
-    String toList = "yoosuf@moogilu.com,jagadish@moogilu.com,shafeek@moogilu.com,yogesh@moogilu.com,rajnish@moogilu.com,gihan@moogilu.com,it@moogilu.com";
-    //String toList = "yoosuf@moogilu.com";
+    //String toList = "yoosuf@moogilu.com,jagadish@moogilu.com,shafeek@moogilu.com,yogesh@moogilu.com,rajnish@moogilu.com,gihan@moogilu.com,it@moogilu.com";
+    String toList = "yoosuf@moogilu.com";
 
 
     @BeforeClass
