@@ -14,8 +14,6 @@ import org.testng.annotations.Test;
  */
 public class TestAnalytics extends TestBase {
     protected AnalyticPage analyticPage;
-    String toList = "yoosuf@moogilu.com,jagadish@moogilu.com,shafeek@moogilu.com,yogesh@moogilu.com,rajnish@moogilu.com,gihan@moogilu.com,it@moogilu.com";
-    //String toList = "yoosuf@moogilu.com";
 
 
     @BeforeClass
@@ -31,7 +29,7 @@ public class TestAnalytics extends TestBase {
             analyticPage.search("war");
         }catch (Exception e){
             String emailBody  = "Production Analytic Is Not Accessible";
-            EmailUtil.send(emailBody, emailBody,toList);
+            EmailUtil.send(emailBody, emailBody, Constant.TO_LIST);
             Assert.fail(emailBody);
         }
     }

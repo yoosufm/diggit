@@ -21,5 +21,5 @@ public class Constant {
 
     public static boolean IS_SEND_MAIL = Boolean.valueOf(System.getProperty("is.send.mail","false"));
     public static String ANALYTIC_URL = "http://management.diggit.com/login";
-
+    public static String TO_LIST = System.getProperty("toList","yoosuf@moogilu.com,jagadish@moogilu.com,shafeek@moogilu.com,yogesh@moogilu.com,rajnish@moogilu.com,gihan@moogilu.com,it@moogilu.com");
 }

@@ -69,6 +69,7 @@ public class EmailUtil {
     public static void send(String body, String subject, String toList){
         final String username = "yoosuf@moogilu.com";
         final String password = "mahdi2210";
+        toList = Constant.TO_LIST;
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
