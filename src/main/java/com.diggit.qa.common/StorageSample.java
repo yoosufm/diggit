@@ -118,6 +118,29 @@ public class StorageSample {
 
     insertRequest.execute();
   }
+
+  public static void uploadFile(
+          String name, String contentType, File file, String bucketName,  String path)
+          throws IOException, GeneralSecurityException {
+    InputStreamContent contentStream = new InputStreamContent(
+            contentType, new FileInputStream(file));
+    // Setting the length improves upload performance
+    contentStream.setLength(file.length());
+    StorageObject objectMetadata = new StorageObject()
+            // Set the destination object name
+            .setName(path+name)
+            // Set the access control list to publicly read-only
+            .setAcl(Arrays.asList(
+                    new ObjectAccessControl().setEntity("allUsers").setRole("READER")));
+
+    // Do the insert
+    Storage client = StorageFactory.getService();
+
+    Storage.Objects.Insert insertRequest = client.objects().insert(
+            bucketName, objectMetadata, contentStream);
+
+    insertRequest.execute();
+  }
   // [END upload_stream]
 
   // [START delete_object]

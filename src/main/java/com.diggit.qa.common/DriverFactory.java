@@ -7,7 +7,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -31,7 +31,8 @@ public class DriverFactory {
 
 		switch (type) {
 			case HtmlUnit:
-				return null;
+				driver = new HtmlUnitDriver();
+				break;
 			case Firefox:
 
 				driver = new FirefoxDriver();
