@@ -33,7 +33,8 @@ public class TestTitleWithOMDB {
 
         DateFormat df = new SimpleDateFormat("dd_MM_yyyy");
         String dateStr = df.format(new Date()).toString();
-        TextFileWriter.writeLineToFile("Title ID,IMDB ID,IMDB Genres,Diggit Genres", "src/main/resources/Genre_Verification_" +dateStr + ".csv");
+        String fileName = "genre-verification-" +dateStr + ".csv";
+        TextFileWriter.writeLineToFile("Title ID,IMDB ID,IMDB Genres,Diggit Genres", "src/main/resources/" +fileName);
         String bucketPath = dateStr.split("_")[2] + "/" + dateStr.split("_")[1] + "/" + dateStr.split("_")[0] + "/";
 
         List<Map<String, String>> titles = DatabaseVerifier.getTitle();
@@ -76,13 +77,13 @@ public class TestTitleWithOMDB {
                 diggitGenre = "No genre available in Diggit DB.";
             }
 
-            TextFileWriter.writeLineToFile(titleId + "," + imdbId + "," + imdbGenre + "," + diggitGenre, "src/main/resources/Genre_Verification_" + dateStr + ".csv");
+            TextFileWriter.writeLineToFile(titleId + "," + imdbId + "," + imdbGenre + "," + diggitGenre, "src/main/resources/" +fileName);
 
         }
 
         try {
-            File tempFile = new File("src/main/resources/Genre_Verification_" +dateStr + ".csv");
-            StorageSample.uploadFile("Genre_Verification_" + dateStr, "text/csv", tempFile, "qa_results", bucketPath);
+            File tempFile = new File("src/main/resources/" +fileName);
+            StorageSample.uploadFile("genre-verification", "text/csv", tempFile, "qa_results", bucketPath);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (GeneralSecurityException e) {
