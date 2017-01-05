@@ -5,11 +5,16 @@ import com.diggit.qa.common.DatabaseVerifier;
 import com.diggit.qa.common.StorageSample;
 import com.diggit.qa.common.TextFileWriter;
 import com.diggit.qa.helper.imdb.IMDBContent;
+import com.google.api.services.storage.Storage;
+import com.google.api.services.storage.model.StorageObject;
+import com.sun.xml.internal.ws.policy.AssertionSet;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.security.GeneralSecurityException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -32,7 +37,7 @@ public class TestTitleWithIMDB {
 
         DateFormat df = new SimpleDateFormat("dd_MMM_yyyy");
         String dateStr = df.format(new Date()).toString();
-        TextFileWriter.writeLineToFile("Title ID,IMDB ID,IMDB Genres,Diggit Genres", "src/main/resources/Genre_Verification_" +dateStr + ".csv");
+        TextFileWriter.writeLineToFile("Title ID,IMDB ID,IMDB Genres,Diggit Genres", "src/main/resources/genere-Verification-" +dateStr + ".csv");
 
         List<Map<String, String>> titles = DatabaseVerifier.getTitle();
         String titleId = titles.get(0).get("diggit_title_id");
@@ -80,12 +85,10 @@ public class TestTitleWithIMDB {
 
     @Test
     public void createFolder(){
-        DateFormat df = new SimpleDateFormat("dd_MMM_yyyy");
-        String dateStr = df.format(new Date()).toString();
         try {
-            File tempFile = new File("src/main/resources/infohash_index.txt");
-
-            StorageSample.uploadFileF("Genre_Verification_" + dateStr, "Folder", tempFile, "qa_results");
+            StorageObject get =  StorageSample.getBucket("dht-pex-prod", "2017/01/04/000002E595A46FCB4F5005F0F5E62C036DF0E0FE-0.csv");
+            BigInteger size = get.getSize();
+            Assert.assertEquals(true,  size.intValue() > 1);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (GeneralSecurityException e) {

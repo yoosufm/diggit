@@ -23,8 +23,6 @@ import com.google.api.services.storage.model.StorageObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,6 +81,16 @@ public class StorageSample {
     Storage.Buckets.Get bucketRequest = client.buckets().get(bucketName);
     // Fetch the full set of the bucket's properties (e.g. include the ACLs in the response)
     bucketRequest.setProjection("full");
+    return bucketRequest.execute();
+  }
+
+  public static StorageObject getBucket(String bucketName, String fileName) throws IOException, GeneralSecurityException {
+    Storage client = StorageFactory.getService();
+
+    Storage.Objects.Get bucketRequest = client.objects().get(bucketName, fileName);
+    // Fetch the full set of the bucket's properties (e.g. include the ACLs in the response)
+    bucketRequest.setProjection("full");
+
     return bucketRequest.execute();
   }
   // [END get_bucket]
