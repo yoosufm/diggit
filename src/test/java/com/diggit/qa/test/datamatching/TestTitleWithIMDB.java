@@ -7,7 +7,6 @@ import com.diggit.qa.common.TextFileWriter;
 import com.diggit.qa.helper.imdb.IMDBContent;
 import com.google.api.services.storage.Storage;
 import com.google.api.services.storage.model.StorageObject;
-import com.sun.xml.internal.ws.policy.AssertionSet;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
