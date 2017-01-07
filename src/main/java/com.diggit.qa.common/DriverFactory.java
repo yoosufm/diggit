@@ -41,7 +41,7 @@ public class DriverFactory {
 				driver = new InternetExplorerDriver();
 				break;
 			case Chrome:
-				System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+				System.setProperty("webdriver.chrome.driver", "src/main/resources/chrome_driver_linux/chromedriver");
 				driver = new ChromeDriver();
 
 				break;
