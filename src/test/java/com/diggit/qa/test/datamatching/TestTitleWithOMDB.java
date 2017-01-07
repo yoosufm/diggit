@@ -1,6 +1,7 @@
 package com.diggit.qa.test.datamatching;
 
 
+import com.diggit.qa.common.Constant;
 import com.diggit.qa.common.DatabaseVerifier;
 import com.diggit.qa.common.StorageSample;
 import com.diggit.qa.common.TextFileWriter;
@@ -83,7 +84,7 @@ public class TestTitleWithOMDB {
 
         try {
             File tempFile = new File("src/main/resources/" +fileName);
-            StorageSample.uploadFile("genre-verification", "text/csv", tempFile, "qa_results", bucketPath);
+            StorageSample.uploadFile("genre-verification", "text/csv", tempFile, Constant.QA_BUCKET, bucketPath);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (GeneralSecurityException e) {
