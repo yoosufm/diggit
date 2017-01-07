@@ -404,7 +404,7 @@ public class DatabaseVerifier {
         try{
             statement = DatabaseConnection.getDatabaseConnection().
                     createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            resultSet = statement.executeQuery("SELECT infohash FROM jobcentral.jobs ORDER BY rand() LIMIT 100;");
+            resultSet = statement.executeQuery("SELECT infohash FROM jobcentral.jobs;");
             infohashes = list(resultSet);
         }catch (SQLException ex){
             ex.printStackTrace();
