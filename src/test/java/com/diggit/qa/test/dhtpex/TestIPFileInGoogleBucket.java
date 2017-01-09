@@ -18,10 +18,7 @@ import java.math.BigInteger;
 import java.security.GeneralSecurityException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by yoosufm on 10/20/16.
@@ -32,10 +29,10 @@ public class TestIPFileInGoogleBucket {
 
     @Test
     public void testIPFileAreAvailableInGoogleBucket() {
-        DateFormat df = new SimpleDateFormat("dd_MM_yyyy");
+        DateFormat df = new SimpleDateFormat("dd_MM_yyyy_hh");
         String dateStr = df.format(new Date()).toString();
         String fileName = "dht-pex-ip-file-verification-" +dateStr + ".csv";
-        String bucketPath = dateStr.split("_")[2] + "/" + dateStr.split("_")[1] + "/" + dateStr.split("_")[0] + "/";
+        String bucketPath = dateStr.split("_")[2] + "/" + dateStr.split("_")[1] + "/" + dateStr.split("_")[0] + "/" + dateStr.split("_")[3] + "/";
 
         TextFileWriter.writeLineToFile("Infohash,IP file status", "src/main/resources/" +fileName);
         try {
@@ -81,6 +78,27 @@ public class TestIPFileInGoogleBucket {
         filePath = date +"/"+ infohash + "-0.csv";
 
         return filePath;
+
+
+    }
+
+    @Test
+    public void testDHPPexWorking() throws IOException, GeneralSecurityException {
+        DateFormat df = new SimpleDateFormat("dd_MM_yyyy");
+
+                StorageObject get = null;
+
+                String  filePath = "2017/01/02/**.csv";
+                try {
+                    get = StorageSample.getBucket("dht-pex-prod", filePath);
+                }catch (GoogleJsonResponseException ex){
+                }
+                Map<String, String> mData= get.getMetadata();
+
+
+
+            //le tempFile = new File("src/main/resources/" +fileName);
+         // StorageSample.uploadFile("dht-pex-ip-file-verification", "text/csv", tempFile, Constant.QA_BUCKET, bucketPath);
 
 
     }
