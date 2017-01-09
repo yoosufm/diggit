@@ -34,26 +34,36 @@ public class TestIPFileInGoogleBucket {
         String fileName = "dht-pex-ip-file-verification-" +dateStr + ".csv";
         String bucketPath = dateStr.split("_")[2] + "/" + dateStr.split("_")[1] + "/" + dateStr.split("_")[0] + "/" + dateStr.split("_")[3] + "/";
 
-        TextFileWriter.writeLineToFile("Infohash,IP file status", "src/main/resources/" +fileName);
+        TextFileWriter.writeLineToFile("Infohash,IP file status,File Size, Server Index", "src/main/resources/" +fileName);
         try {
             List<String> infohashes = DatabaseVerifier.getAllInfohashInJobTable();
             for (String infohash : infohashes) {
-                String fileStatus = "Available";
+                String fileStatus = "Not Available";
                 StorageObject get = null;
-
-              String  filePath = getFilePath(infohash);
-                try {
-                    get = StorageSample.getBucket("dht-pex-prod", filePath);
-                }catch (GoogleJsonResponseException ex){
-                    fileStatus = "Not Available";
-                }
-                if(!fileStatus.equalsIgnoreCase("Not Available")) {
-                    BigInteger size = get.getSize();
-                    if(!(size.intValue() > 1)){
-                        fileStatus = "IP File is empty";
+                BigInteger size = null;
+                int serverIndex = 0;
+                for(; serverIndex < 82 ; serverIndex ++) {
+                    String filePath = getFilePath(infohash, String.valueOf(serverIndex));
+                    try {
+                        get = StorageSample.getBucket("dht-pex-prod", filePath);
+                    } catch (GoogleJsonResponseException ex) {
+                    }
+                    if (get != null) {
+                         size = get.getSize();
+                        if (!(size.intValue() > 1)) {
+                            fileStatus = "IP File is empty";
+                        }else {
+                            fileStatus = "Available";
+                        }
+                        break;
                     }
                 }
-                TextFileWriter.writeLineToFile(infohash + "," + fileStatus, "src/main/resources/" + fileName);
+                if(size == null){
+                    TextFileWriter.writeLineToFile(infohash + "," + fileStatus + ", - ," + serverIndex  , "src/main/resources/" + fileName);
+
+                }else {
+                    TextFileWriter.writeLineToFile(infohash + "," + fileStatus + "," + size.intValue() +"," + serverIndex, "src/main/resources/" + fileName);
+                }
 
             }
                 File tempFile = new File("src/main/resources/" +fileName);
@@ -67,13 +77,13 @@ public class TestIPFileInGoogleBucket {
     }
 
 
-    public String  getFilePath(String infohash){
+    public String  getFilePath(String infohash, String serverIndex){
         String filePath = "";
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
         String date = dateFormat.format(cal.getTime());
-        filePath = date +"/"+ infohash + "-0.csv";
+        filePath = date +"/"+ infohash + "-"+serverIndex+".csv";
 
         return filePath;
 
