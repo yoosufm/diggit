@@ -38,7 +38,7 @@ public class TestIPFileInGoogleBucket {
         try {
             List<String> infohashes = DatabaseVerifier.getAllInfohashInJobTable();
             for (String infohash : infohashes) {
-                String fileStatus = "";
+                String fileStatus = "Available";
                 StorageObject get = null;
 
               String  filePath = getFilePath(infohash);
@@ -53,9 +53,7 @@ public class TestIPFileInGoogleBucket {
                         fileStatus = "IP File is empty";
                     }
                 }
-                if(!fileStatus.isEmpty()) {
-                    TextFileWriter.writeLineToFile(infohash + "," + fileStatus, "src/main/resources/" + fileName);
-                }
+                TextFileWriter.writeLineToFile(infohash + "," + fileStatus, "src/main/resources/" + fileName);
 
             }
                 File tempFile = new File("src/main/resources/" +fileName);
