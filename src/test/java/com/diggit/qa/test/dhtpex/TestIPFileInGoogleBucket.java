@@ -82,13 +82,13 @@ public class TestIPFileInGoogleBucket {
 
     }
 
-    @Test
+//    @Test
     public void testDHPPexWorking() throws IOException, GeneralSecurityException {
         DateFormat df = new SimpleDateFormat("dd_MM_yyyy");
 
                 StorageObject get = null;
 
-                String  filePath = "2017/01/02/**.csv";
+                String  filePath = "2017/01/02";
                 try {
                     get = StorageSample.getBucket("dht-pex-prod", filePath);
                 }catch (GoogleJsonResponseException ex){
