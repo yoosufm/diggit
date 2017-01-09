@@ -47,7 +47,7 @@ public class TestIPFileInGoogleBucket {
                 }catch (GoogleJsonResponseException ex){
                     fileStatus = "Not Available";
                 }
-                if(fileStatus.isEmpty()) {
+                if(!fileStatus.equalsIgnoreCase("Not Available")) {
                     BigInteger size = get.getSize();
                     if(!(size.intValue() > 1)){
                         fileStatus = "IP File is empty";
