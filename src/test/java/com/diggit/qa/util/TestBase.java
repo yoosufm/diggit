@@ -40,7 +40,7 @@ public class TestBase extends TestListenerAdapter {
 
 	@BeforeClass
 	public void initSelenium() {
-		DRIVER = DriverFactory.getWebDriver("Chrome");
+		DRIVER = DriverFactory.getWebDriver("Firefox");
 
 	}
 

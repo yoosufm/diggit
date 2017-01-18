@@ -90,7 +90,7 @@ public class TestIPFileInGoogleBucket {
 
     }
 
-//    @Test
+    @Test
     public void testDHPPexWorking() throws IOException, GeneralSecurityException {
         DateFormat df = new SimpleDateFormat("dd_MM_yyyy");
 
