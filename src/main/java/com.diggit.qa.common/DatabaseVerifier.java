@@ -314,6 +314,7 @@ public class DatabaseVerifier {
     }
 
 
+
     public static List<Map<String, String>> getTitle(){
         ResultSet resultSet = null;
         Statement statement = null;
@@ -339,7 +340,7 @@ public class DatabaseVerifier {
         try{
             connection = DatabaseConnection.getDatabaseConnection();
             statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            resultSet = statement.executeQuery("SELECT COUNT(dti.diggit_title_id) AS rowcount FROM diggit_titles_infohashes dti LEFT JOIN diggit_titles dt ON dt.diggit_title_id = dti.diggit_title_id WHERE dt.diggit_title_id IS NULL;");
+            resultSet = statement.executeQuery("SELECT COUNT(dti.diggit_title_id) AS rowcount FROM torrents.diggit_titles_infohashes dti LEFT JOIN torrents.diggit_titles dt ON dt.diggit_title_id = dti.diggit_title_id WHERE dt.diggit_title_id IS NULL;");
             while (resultSet.next()){
                 leftJoinCount = Integer.valueOf(resultSet.getString("rowcount"));
                 break;
@@ -405,6 +406,24 @@ public class DatabaseVerifier {
             statement = DatabaseConnection.getDatabaseConnection().
                     createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             resultSet = statement.executeQuery("SELECT infohash FROM jobcentral.jobs ORDER BY rand() LIMIT 100;");
+            infohashes = list(resultSet);
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        close(statement);
+
+        return infohashes;
+    }
+
+    public static List<String> getLatestInfohashes(){
+        ResultSet resultSet = null;
+        int jobCount = 0;
+        List<String> infohashes = new ArrayList<>();
+        Statement statement = null;
+        try{
+            statement = DatabaseConnection.getDatabaseConnection().
+                    createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            resultSet = statement.executeQuery("SELECT infohash FROM torrents.infohashes ORDER BY added_time DESC LIMIT 2000;");
             infohashes = list(resultSet);
         }catch (SQLException ex){
             ex.printStackTrace();

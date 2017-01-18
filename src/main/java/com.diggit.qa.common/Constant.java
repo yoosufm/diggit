@@ -23,4 +23,5 @@ public class Constant {
     public static String ANALYTIC_URL = "http://management.diggit.com/login";
     public static String TO_LIST = System.getProperty("toList","yoosuf@moogilu.com,jagadish@moogilu.com,shafeek@moogilu.com,rajnish@moogilu.com,gihan@moogilu.com,it@moogilu.com");
     public static String QA_BUCKET = "diggit-qa";
+    public static String PROJECT_ID = "diggit-1266";
 }

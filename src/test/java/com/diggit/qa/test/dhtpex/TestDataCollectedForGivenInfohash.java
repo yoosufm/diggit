@@ -32,7 +32,7 @@ public class TestDataCollectedForGivenInfohash {
         List<String> infohasehes = DatabaseVerifier.getLatestInfohashes();
 
         Bigquery bigquery = BigQueryUtil. createAuthorizedClient();
-       
+
       //  List<String> infohasehes = new ArrayList<>();
         infohasehes.add("13A27BDB9848A2E90514D5E6CC4E70F57E0AD11F");
         infohasehes.add("89925FB48CAE260801F35FB7175530BF6E5E055A");

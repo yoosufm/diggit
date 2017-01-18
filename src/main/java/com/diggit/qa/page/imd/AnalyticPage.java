@@ -14,9 +14,9 @@ public class AnalyticPage {
     public AnalyticPage(String url, WebDriver driver){
         this.driver = driver;
         this.driver.navigate().to(url);
-        this.driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
-        this. driver.manage().timeouts().pageLoadTimeout(300, TimeUnit.SECONDS);
-        this.driver.manage().timeouts().setScriptTimeout(300, TimeUnit.SECONDS);
+        this.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        this. driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+        this.driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
     }
 
     public void login(String userName, String password, String role){
