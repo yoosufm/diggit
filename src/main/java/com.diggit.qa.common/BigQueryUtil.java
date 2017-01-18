@@ -55,7 +55,7 @@ public class BigQueryUtil {
     private static final String PROJECT_ID = "diggit-1266";
     private static final String CLIENTSECRETS_LOCATION = "/home/yoosufm/wp/Diggit-d05a5d7c7140.json";
 
-    static GoogleClientSecrets clientSecrets = loadClientSecrets();
+   // static GoogleClientSecrets clientSecrets = loadClientSecrets();
 
     // Static variables for API scope, callback URI, and HTTP/JSON functions
   //  private static final List<String> SCOPES = Arrays.asList(BigqueryScopes.);
