@@ -29,10 +29,10 @@ public class TestIPFileInGoogleBucket {
 
     @Test
     public void testIPFileAreAvailableInGoogleBucket() {
-        DateFormat df = new SimpleDateFormat("dd_MM_yyyy_HH");
+        DateFormat df = new SimpleDateFormat("dd_MM_yyyy");
         String dateStr = df.format(new Date()).toString();
         String fileName = "dht-pex-ip-file-verification-" +dateStr + ".csv";
-        String bucketPath = dateStr.split("_")[2] + "/" + dateStr.split("_")[1] + "/" + dateStr.split("_")[0] + "/" + dateStr.split("_")[3] + "/";
+        String bucketPath = dateStr.split("_")[2] + "/" + dateStr.split("_")[1] + "/" + dateStr.split("_")[0] + "/";
 
         TextFileWriter.writeLineToFile("Infohash,IP file status,File Size, Server Index", "src/main/resources/" +fileName);
         try {
