@@ -55,7 +55,7 @@ public class TestStateMachine {
 
         try {
             File tempFile = new File("src/main/resources/State_Machine_Verification_" +dateStr + ".csv");
-            StorageSample.uploadFile("state-machine-verification" , "text/csv", tempFile, Constant.QA_BUCKET, bucketPath);
+            StorageSample.uploadFile("state-machine-infohash-tracked" , "text/csv", tempFile, Constant.QA_BUCKET, bucketPath);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (GeneralSecurityException e) {
