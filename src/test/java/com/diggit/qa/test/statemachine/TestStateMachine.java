@@ -26,14 +26,14 @@ public class TestStateMachine {
     String dateStr = "";
     @BeforeClass
     public void init(){
-        DateFormat df = new SimpleDateFormat("dd_MM_yyyy_hh");
+        DateFormat df = new SimpleDateFormat("dd_MM_yyyy");
         dateStr = df.format(new Date()).toString();
     }
 
     @Test
     public void testInfohashTrackCount(){
 
-        String bucketPath = dateStr.split("_")[2] + "/" + dateStr.split("_")[1] + "/" + dateStr.split("_")[0] + "/" + dateStr.split("_")[3] + "/";
+        String bucketPath = dateStr.split("_")[2] + "/" + dateStr.split("_")[1] + "/" + dateStr.split("_")[0] + "/";
 
         List<String> infohashes = DatabaseVerifier.getInfohashs();
         TextFileWriter.cleanFileContents(Constant.errorLogFileName);
