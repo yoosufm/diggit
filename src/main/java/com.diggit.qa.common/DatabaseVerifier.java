@@ -364,7 +364,7 @@ public class DatabaseVerifier {
         try {
             connection = DatabaseConnection.getDatabaseConnection();
             statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            resultSet = statement.executeQuery("SELECT jobs FROM jobcentral.jobs ORDER BY rand() LIMIT 100;");
+            resultSet = statement.executeQuery("SELECT * FROM jobcentral.jobs ORDER BY rand() LIMIT 100;");
         }catch (CommunicationsException ex){
             ex.printStackTrace();
             return Errors.DB_SERVER_NOT_AVAILABLE;
