@@ -27,7 +27,7 @@ public class TestDataCollectedForGivenInfohash {
     public void testDataCollectedForTopInfohashes() throws IOException, InterruptedException {
         DateFormat df = new SimpleDateFormat("dd_MM_yyyy");
         String dateStr = df.format(new Date()).toString();
-        String fileName = "latest-infohash-data-collection" +dateStr + ".csv";
+        String fileName = "latest-jobs-data-collection" +dateStr + ".csv";
         TextFileWriter.writeLineToFile("Info-hash,IP Count", "src/main/resources/" +fileName);
         List<String> infohasehes = DatabaseVerifier.getLatestInfohashes();
 
@@ -44,7 +44,7 @@ public class TestDataCollectedForGivenInfohash {
 
         // Start a Query Job
         for(String infohash: infohasehes) {
-            String querySql = "SELECT count(*) FROM [diggit-1266:diggit_hist.Diggit_IP_US] where date > '2017-01-16' and date < '2017-01-18' and infohash = '"+infohash+"';";
+            String querySql = "SELECT count(*) FROM [diggit-1266:diggit_hist.Diggit_IP_US] where date > '2017-01-16' and date < '2017-01-18' and jobs = '"+infohash+"';";
             JobReference jobId = BigQueryUtil.startQuery(bigquery, Constant.PROJECT_ID, querySql);
 
             // Poll for Query Results, return result output
@@ -56,7 +56,7 @@ public class TestDataCollectedForGivenInfohash {
                 for (TableCell field : row.getF()) {
                     TextFileWriter.writeLineToFile(infohash + "," + field.getV().toString(), "src/main/resources/" +fileName);
 
-                   // System.out.printf(infohash + " , "+ field.getV().toString());
+                   // System.out.printf(jobs + " , "+ field.getV().toString());
                 }
             }
         }
