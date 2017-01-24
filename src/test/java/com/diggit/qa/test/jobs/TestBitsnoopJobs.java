@@ -7,6 +7,12 @@ import com.google.api.services.bigquery.model.Job;
 import com.google.api.services.bigquery.model.JobReference;
 import com.google.api.services.bigquery.model.TableCell;
 import com.google.api.services.bigquery.model.TableRow;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -63,6 +69,28 @@ public class TestBitsnoopJobs {
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         }
+    }
+    @Test
+    public void testBitsnoopAPI() throws IOException, InterruptedException {
+        DateFormat df = new SimpleDateFormat("dd_MM_yyyy");
+        String dateStr = df.format(new Date()).toString();
+        String fileName = "bitsnoop-data-collection" + dateStr + ".csv";
+        TextFileWriter.writeLineToFile("Job Name, Infohashes", "src/main/resources/" + fileName);
+        String bucketPath = dateStr.split("_")[2] + "/" + dateStr.split("_")[1] + "/" + dateStr.split("_")[0] + "/";
+
+        HttpClient client = new DefaultHttpClient();
+
+        HttpGet post = new HttpGet(Constant.MANAGEMENT_LOGIN);
+       // StringEntity input = new StringEntity();
+        //input.setContentType("application/json");
+       // post.setEntity(input);
+
+        HttpResponse response = null;
+        response = client.execute(post);
+        HttpEntity entity = response.getEntity();
+        String responseString = EntityUtils.toString(entity, "UTF-8");
+        System.out.println(responseString);
+        //System.out.println(response.getEntity().getContent().toString());
     }
 
 }

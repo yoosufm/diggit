@@ -223,7 +223,7 @@ public class DatabaseVerifier {
 
         try{
 
-            resultSet = statement.executeQuery("SELECT TRACKED FROM torrents.infohashes WHERE jobs = '" +infohash + "'");
+            resultSet = statement.executeQuery("SELECT TRACKED FROM torrents.infohashes WHERE infohash = '" +infohash + "'");
             while (resultSet.next()){
                 trackCount = resultSet.getInt("TRACKED");
                 break;
@@ -241,7 +241,7 @@ public class DatabaseVerifier {
 
         try{
 
-            resultSet = statement.executeQuery("SELECT count(jobs) AS rowcount FROM torrents.group_infohashes where jobs = '"+infohash+"'");
+            resultSet = statement.executeQuery("SELECT count(infohash) AS rowcount FROM torrents.group_infohashes where infohash = '"+infohash+"'");
             while (resultSet.next()){
                 groupInfohash = resultSet.getInt("rowcount");
                 break;
@@ -256,7 +256,7 @@ public class DatabaseVerifier {
         ResultSet resultSet = null;
         int jobCount = 0;
         try{
-            resultSet = statement.executeQuery("SELECT count(jobs) AS rowcount FROM jobcentral.jobs where jobs = '"+infohash+"'");
+            resultSet = statement.executeQuery("SELECT count(infohash) AS rowcount FROM jobcentral.jobs where infohash = '"+infohash+"'");
             while (resultSet.next()){
                 jobCount = resultSet.getInt("rowcount");
                 break;
@@ -303,7 +303,7 @@ public class DatabaseVerifier {
         try{
             statement = DatabaseConnection.getDatabaseConnection().
                     createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-            resultSet = statement.executeQuery("SELECT jobs FROM torrents.infohashes ORDER BY rand() LIMIT 300;");
+            resultSet = statement.executeQuery("SELECT infohash FROM torrents.infohashes ORDER BY rand() LIMIT 300;");
             infohashes = list(resultSet);
         }catch (SQLException ex){
             ex.printStackTrace();

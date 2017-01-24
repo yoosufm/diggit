@@ -40,7 +40,7 @@ public class TestStateMachine {
         TextFileWriter.writeLineToFile("State machine verification test", "src/main/resources/State_Machine_Verification_" +dateStr + ".csv");
         TextFileWriter.writeLineToFile("Infohash,Track_Count,Group_Infohash_Count,Expected_Job_Count,Actual_Job_Count,State_Machine_Status", "src/main/resources/State_Machine_Verification_" +dateStr + ".csv");
         for(String infohash: infohashes) {
-            infohash =infohash.replace("\r","");
+            infohash = infohash.replace("\r","");
             String stateMachineStatus = "Correct";
 
             List<Integer> state =  DatabaseVerifier.getStateMachineCount(infohash);
