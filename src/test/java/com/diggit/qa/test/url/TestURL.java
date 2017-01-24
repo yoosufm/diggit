@@ -37,8 +37,7 @@ public class TestURL {
     String status = "";
     @BeforeClass
     public void init(){
-
-
+        TextFileWriter.cleanFileContents("src/main/resources/" + fileName);
         TextFileWriter.writeLineToFile("URL, Status, Response Time (ms)", "src/main/resources/" + fileName);
     }
 
