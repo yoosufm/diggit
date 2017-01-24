@@ -36,7 +36,7 @@ public class TestStateMachine {
         String bucketPath = dateStr.split("_")[2] + "/" + dateStr.split("_")[1] + "/" + dateStr.split("_")[0] + "/";
 
         List<String> infohashes = DatabaseVerifier.getInfohashs();
-        TextFileWriter.cleanFileContents(Constant.errorLogFileName);
+        TextFileWriter.cleanFileContents("src/main/resources/State_Machine_Verification_" +dateStr + ".csv");
         TextFileWriter.writeLineToFile("State machine verification test", "src/main/resources/State_Machine_Verification_" +dateStr + ".csv");
         TextFileWriter.writeLineToFile("Infohash,Track_Count,Group_Infohash_Count,Expected_Job_Count,Actual_Job_Count,State_Machine_Status", "src/main/resources/State_Machine_Verification_" +dateStr + ".csv");
         for(String infohash: infohashes) {
