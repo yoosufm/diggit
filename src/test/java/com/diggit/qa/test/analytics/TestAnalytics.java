@@ -23,15 +23,15 @@ public class TestAnalytics extends TestBase {
 
     @Test
     public void testLoginAnalytic(){
- //       try {
+        try {
             analyticPage.login("yoosuf@moogilu.com", "hafsa2210", "Super Admin");
             analyticPage.moveToAnalytic();
             analyticPage.search("war");
-//        }catch (Exception e){
-//            String emailBody  = "Production Analytic Is Not Accessible";
-//            EmailUtil.send(emailBody, emailBody, Constant.TO_LIST);
-//            Assert.fail(emailBody);
-//        }
+        }catch (Exception e){
+            String emailBody  = "Production Analytic Is Not Accessible";
+            EmailUtil.send(emailBody, emailBody, Constant.TO_LIST);
+            Assert.fail(emailBody);
+        }
     }
 
 
