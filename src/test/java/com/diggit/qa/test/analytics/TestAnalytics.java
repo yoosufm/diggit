@@ -21,13 +21,12 @@ import java.util.Date;
 /**
  * Created by yoosufm on 12/18/16.
  */
-public class TestAnalytics extends TestBase {
+public class TestAnalytics {
     protected AnalyticPage analyticPage;
 
 
     @BeforeClass
     public void init(){
-        analyticPage = new AnalyticPage(Constant.ANALYTIC_URL, DRIVER);
     }
 
     @Test
