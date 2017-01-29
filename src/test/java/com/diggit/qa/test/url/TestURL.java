@@ -2,8 +2,12 @@ package com.diggit.qa.test.url;
 
 
 import com.diggit.qa.common.Constant;
+import com.diggit.qa.common.EmailUtil;
 import com.diggit.qa.common.StorageSample;
 import com.diggit.qa.common.TextFileWriter;
+import com.diggit.qa.page.imd.AnalyticPage;
+import com.diggit.qa.page.imd.OpstatePage;
+import com.diggit.qa.util.TestBase;
 import com.google.gson.JsonObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -13,6 +17,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -27,7 +33,10 @@ import java.util.Date;
 /**
  * Created by yoosufm on 10/20/16.
  */
-public class TestURL {
+public class TestURL extends TestBase {
+    protected AnalyticPage analyticPage;
+    protected OpstatePage opstatePage;
+
     long testSuiteStarted = 0;
     long testSuiteDuration = 0;
     DateFormat df = new SimpleDateFormat("dd_MM_yyyy");
@@ -35,79 +44,162 @@ public class TestURL {
     String fileName = "url-verification-testing" + dateStr + ".csv";
     String bucketPath = dateStr.split("_")[2] + "/" + dateStr.split("_")[1] + "/" + dateStr.split("_")[0] + "/";
     String status = "";
+    String description = "";
+
     @BeforeClass
     public void init(){
+
         TextFileWriter.cleanFileContents("src/main/resources/" + fileName);
-        TextFileWriter.writeLineToFile("URL, Status, Response Time (ms)", "src/main/resources/" + fileName);
+        TextFileWriter.writeLineToFile("Description, URL, Status, Response Time (ms)", "src/main/resources/" + fileName);
     }
 
 
-
     @Test
-    public void testLoadManagement() throws IOException, InterruptedException {
+    public void testManagementHomePage(){
+        description = "Load Management Portal Login Page";
+        try {
+            testSuiteStarted = new Date().getTime();
+            analyticPage = new AnalyticPage(Constant.MANAGEMENT_HOME, DRIVER);
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+ Constant.MANAGEMENT_HOME + ", Page is loaded," + testSuiteDuration , "src/main/resources/" + fileName);
 
-        JsonObject jsonReport = new JsonObject();
+        }catch (Exception e){
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+ Constant.MANAGEMENT_HOME + ", Page is not loaded," + testSuiteDuration , "src/main/resources/" + fileName);
 
-        jsonReport.addProperty("email", "yoosuf@moogilu.com");
-        jsonReport.addProperty("password", "hafsa2210");
-        jsonReport.addProperty("role_id", "1");
+        }
+    }
 
+    @Test(dependsOnMethods = "testManagementHomePage", alwaysRun = true)
+    public void testLoginToManagement(){
+        description = "Login to Management Portal";
 
         try {
-            HttpClient client = new DefaultHttpClient();
-
-            HttpGet post = new HttpGet(Constant.MANAGEMENT_HOME);
-            System.out.println(jsonReport);
-
-            HttpResponse response = null;
             testSuiteStarted = new Date().getTime();
-            response = client.execute(post);
+
+            analyticPage.login("yoosuf@moogilu.com", "hafsa2210", "Super Admin");
+
             testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+Constant.MANAGEMENT_LOGIN + ", Page is loaded," + testSuiteDuration , "src/main/resources/" + fileName);
 
-            HttpEntity entity = response.getEntity();
-            String responseString = EntityUtils.toString(entity, "UTF-8");
-            status =  response.getStatusLine().getReasonPhrase();
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch (Exception e){
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+Constant.MANAGEMENT_LOGIN + ", Page is not loaded," + testSuiteDuration , "src/main/resources/" + fileName);
         }
-
-        TextFileWriter.writeLineToFile(Constant.MANAGEMENT_HOME + ","+status+ "," +testSuiteDuration+ "", "src/main/resources/" + fileName);
-
-
     }
 
-    @Test
-    public void testLoginToManagement() throws IOException, InterruptedException {
+    @Test(dependsOnMethods = "testLoginToManagement", alwaysRun = true)
+    public void testAnalytic(){
+        description = "Navigate to Analytic Page";
+        sleep(10000);
+        try {
+            testSuiteStarted = new Date().getTime();
+            analyticPage.moveToAnalytic();
+            analyticPage.search("war");
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+Constant.ANALYTIC_URL + ", Page is loaded," + testSuiteDuration , "src/main/resources/" + fileName);
 
-        JsonObject jsonReport = new JsonObject();
-
-        jsonReport.addProperty("email", "yoosuf@moogilu.com");
-        jsonReport.addProperty("password", "hafsa2210");
-        jsonReport.addProperty("role_id", "1");
-
-
-            try {
-                HttpClient client = new DefaultHttpClient();
-
-                HttpPost post = new HttpPost(Constant.MANAGEMENT_LOGIN);
-                System.out.println(jsonReport);
-                StringEntity input = new StringEntity(jsonReport.toString());
-                input.setContentType("application/json");
-                post.setEntity(input);
-
-                HttpResponse response = null;
-                testSuiteStarted = new Date().getTime();
-                response = client.execute(post);
-                testSuiteDuration = new Date().getTime() - testSuiteStarted;
-                status =  response.getStatusLine().getReasonPhrase();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        TextFileWriter.writeLineToFile(Constant.MANAGEMENT_LOGIN + ","+status+ "," +testSuiteDuration+ "", "src/main/resources/" + fileName);
-
+        }catch (Exception e){
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+Constant.ANALYTIC_URL + ", Page is not loaded," + testSuiteDuration , "src/main/resources/" + fileName);
+        }
     }
+
+    @Test(dependsOnMethods = "testLoginToManagement", alwaysRun = true)
+    public void testNavigateOpstatHomePage(){
+        description = "Navigate to Opstats Home Page";
+        opstatePage = new OpstatePage(DRIVER);
+        try {
+            sleep(10000);
+            testSuiteStarted = new Date().getTime();
+            analyticPage.moveToOpstate();
+            opstatePage.waitForOpstatHomePageLoaded();
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+Constant.OP_STATE + ", Page is loaded," + testSuiteDuration , "src/main/resources/" + fileName);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+Constant.OP_STATE + ", Page is not loaded," + testSuiteDuration , "src/main/resources/" + fileName);
+        }
+    }
+
+    @Test(dependsOnMethods = "testNavigateOpstatHomePage", alwaysRun = true)
+    public void testNavigateOpstatDHTPEXYieldStatisticsPage(){
+        description = "Navigate to DHT-PEX Yield Statistics Page";
+        sleep(10000);
+
+        try {
+            testSuiteStarted = new Date().getTime();
+            opstatePage.loadDHTPEXStat();
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+Constant.OP_STATE + ", Page is loaded," + testSuiteDuration , "src/main/resources/" + fileName);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            e.printStackTrace();
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+Constant.OP_STATE + ", Page is not loaded," + testSuiteDuration , "src/main/resources/" + fileName);
+        }
+    }
+
+    @Test(dependsOnMethods = "testNavigateOpstatDHTPEXYieldStatisticsPage", alwaysRun = true)
+    public void testNavigateOpstatTitleStatisticsPage(){
+        description = "Navigate to Title Statistics Page";
+        sleep(10000);
+
+        try {
+            testSuiteStarted = new Date().getTime();
+            opstatePage.loadTitleStat();
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+Constant.OP_STATE + ", Page is loaded," + testSuiteDuration , "src/main/resources/" + fileName);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+Constant.OP_STATE + ", Page is not loaded," + testSuiteDuration , "src/main/resources/" + fileName);
+        }
+    }
+
+    @Test(dependsOnMethods = "testNavigateOpstatTitleStatisticsPage", alwaysRun = true)
+    public void testNavigateOpstatInfoHashPage(){
+        description = "Navigate to Info-Hash Statistics Page";
+        sleep(10000);
+
+        try {
+            testSuiteStarted = new Date().getTime();
+            opstatePage.loadInfohashStat();
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+Constant.OP_STATE + ", Page is loaded," + testSuiteDuration , "src/main/resources/" + fileName);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+Constant.OP_STATE + ", Page is not loaded," + testSuiteDuration , "src/main/resources/" + fileName);
+        }
+    }
+
+    @Test(dependsOnMethods = "testNavigateOpstatInfoHashPage", alwaysRun = true)
+    public void testNavigateOpstatErrorPage(){
+        description = "Navigate to Error Statistics Page";
+        sleep(10000);
+
+        try {
+            testSuiteStarted = new Date().getTime();
+            opstatePage.loadErrorStat();
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+Constant.OP_STATE + ", Page is loaded," + testSuiteDuration , "src/main/resources/" + fileName);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            testSuiteDuration = new Date().getTime() - testSuiteStarted;
+            TextFileWriter.writeLineToFile(description +","+Constant.OP_STATE + ", Page is not loaded," + testSuiteDuration , "src/main/resources/" + fileName);
+        }
+    }
+
+
+
+
 
     @AfterClass
     public void clean(){
@@ -119,6 +211,8 @@ public class TestURL {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        DRIVER.quit();
     }
 
 }

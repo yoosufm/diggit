@@ -40,7 +40,7 @@ public class TestBase extends TestListenerAdapter {
 
 	@BeforeClass
 	public void initSelenium() {
-		DRIVER = DriverFactory.getWebDriver("Firefox");
+		DRIVER = DriverFactory.getWebDriver("Chrome");
 
 	}
 
@@ -93,6 +93,14 @@ public class TestBase extends TestListenerAdapter {
 		}
 		return path;
 
+	}
+
+	public void sleep(long timeOut){
+		try {
+			Thread.sleep(timeOut);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

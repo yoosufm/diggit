@@ -28,15 +28,39 @@ import java.util.*;
 public class TestBitsnoopJobs {
 
 
-
-
     @Test
-    public void testJobsCollectInfohashes() throws IOException, InterruptedException {
+    public void testBitsnoopAPI() throws IOException, InterruptedException {
         DateFormat df = new SimpleDateFormat("dd_MM_yyyy");
         String dateStr = df.format(new Date()).toString();
-        String fileName = "bitsnoop-data-collection" + dateStr + ".csv";
-        TextFileWriter.writeLineToFile("Job Name, Infohashes", "src/main/resources/" + fileName);
+        String fileName = "latest-infohash-collection" + dateStr + ".csv";
+        TextFileWriter.writeLineToFile("Job Name, Status", "src/main/resources/" + fileName);
         String bucketPath = dateStr.split("_")[2] + "/" + dateStr.split("_")[1] + "/" + dateStr.split("_")[0] + "/";
+
+        HttpClient client = new DefaultHttpClient();
+
+        HttpGet post = new HttpGet(Constant.BITSNOOP_API);
+        // StringEntity input = new StringEntity();
+        //input.setContentType("application/json");
+        // post.setEntity(input);
+
+        HttpResponse response = null;
+        response = client.execute(post);
+        HttpEntity entity = response.getEntity();
+        String responseString = EntityUtils.toString(entity, "UTF-8");
+        System.out.println(responseString);
+        if (responseString.isEmpty()) {
+            TextFileWriter.writeLineToFile("Bitsnoop " + "," + "Bitsnoop API does not return latest info-hashes", "src/main/resources/" + fileName);
+        }
+
+        File tempFile = new File("src/main/resources/" + fileName);
+        try {
+            StorageSample.uploadFile("latest-infohash-collection", "text/csv", tempFile, Constant.QA_BUCKET, bucketPath);
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
+  /*  public void testJobsCollectInfohashes() throws IOException, InterruptedException {
 
         String[] jobs = {"bitsnoop"};
 
@@ -69,28 +93,6 @@ public class TestBitsnoopJobs {
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         }
-    }
-    @Test
-    public void testBitsnoopAPI() throws IOException, InterruptedException {
-        DateFormat df = new SimpleDateFormat("dd_MM_yyyy");
-        String dateStr = df.format(new Date()).toString();
-        String fileName = "bitsnoop-data-collection" + dateStr + ".csv";
-        TextFileWriter.writeLineToFile("Job Name, Infohashes", "src/main/resources/" + fileName);
-        String bucketPath = dateStr.split("_")[2] + "/" + dateStr.split("_")[1] + "/" + dateStr.split("_")[0] + "/";
-
-        HttpClient client = new DefaultHttpClient();
-
-        HttpGet post = new HttpGet(Constant.MANAGEMENT_LOGIN);
-       // StringEntity input = new StringEntity();
-        //input.setContentType("application/json");
-       // post.setEntity(input);
-
-        HttpResponse response = null;
-        response = client.execute(post);
-        HttpEntity entity = response.getEntity();
-        String responseString = EntityUtils.toString(entity, "UTF-8");
-        System.out.println(responseString);
-        //System.out.println(response.getEntity().getContent().toString());
-    }
+    }*/
 
 }

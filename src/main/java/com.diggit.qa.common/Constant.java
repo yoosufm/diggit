@@ -20,13 +20,11 @@ public class Constant {
     public static String SOME_FAILED = "1. State machine is correct for s_count info-hashes.  \n2. State machine is incorrect for f_count info-hashes.";
 
     public static boolean IS_SEND_MAIL = Boolean.valueOf(System.getProperty("is.send.mail","false"));
-    public static String ANALYTIC_URL = "http://management.diggit.com/login";
     public static String TO_LIST = System.getProperty("toList","yoosuf@moogilu.com,yathindra@moogilu.com");
     public static String QA_BUCKET = "diggit-qa";
     public static String PROJECT_ID = "diggit-1266";
 
     public static final String URL2 = "http://analytics.diggit.com";
-    public static final String URL3 = "http://opstats.diggit.com";
     public static final String URL4 = "http://analytics.diggit.com/#/dashboard";
     public static final String URL5 = "http://www.omdbapi.com/";
     public static final String URL6 = "https://torrentz2.eu";
@@ -39,5 +37,9 @@ public class Constant {
 
     public static final String MANAGEMENT_HOME = "http://management.diggit.com/login";
     public static final String MANAGEMENT_LOGIN = "http://management.diggit.com/auth/local";
+    public static String ANALYTIC_URL = "http://analytics.diggit.com/";
+    public static final String OP_STATE = "http://opstats.diggit.com/#/opstats";
+
+
 
 }

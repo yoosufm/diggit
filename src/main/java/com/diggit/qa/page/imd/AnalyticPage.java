@@ -2,7 +2,9 @@ package com.diggit.qa.page.imd;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,21 +26,38 @@ public class AnalyticPage {
         driver.findElement(By.name("password")).sendKeys(password);
         new Select(driver.findElement(By.name("role_id"))).selectByVisibleText(role);
         driver.findElement(By.xpath("//button[@class='btn btn-inverse btn-lg btn-login']")).click();
-
+        isClickable(By.xpath("//a[@ng-click='goToAnalytics()']"), 30);
     }
 
     public void moveToAnalytic(){
+        driver.findElement(By.xpath("//a[@ng-click='goToAnalytics()']")).click();
+    }
 
+    public void moveToOpstate(){
         try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
+            driver.findElement(By.xpath("//a[@ng-href='#/opstats']")).click();
+
+        }catch (Exception e){
             e.printStackTrace();
         }
-        driver.findElement(By.xpath("//a[@ng-click='goToAnalytics()']")).click();
     }
 
     public void search(String text){
         driver.findElement(By.xpath("//input[@ng-enter='search()']")).sendKeys(text);
         driver.findElement(By.xpath("//button[@class='btn btn-success']")).click();
+    }
+
+    public void waitTillManagementMainPageLoad(){
+
+    }
+
+    public boolean isClickable(By by, long timeOut) {
+        try {
+            new WebDriverWait(driver, timeOut).until(ExpectedConditions.elementToBeClickable(by));
+            return true;
+        } catch (Exception e) {
+
+            return false;
+        }
     }
 }
